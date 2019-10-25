@@ -5,7 +5,6 @@ import _ from 'lodash'
 import { Layout } from '../layout'
 import { Bio } from '../components/bio'
 import { Head } from '../components/head'
-import { Category } from '../components/category'
 import { Contents } from '../components/contents'
 
 import * as ScrollManager from '../utils/scroll'
@@ -75,11 +74,11 @@ export default ({ data, location }) => {
     <Layout location={location} title={siteMetadata.title}>
       <Head title={HOME_TITLE} keywords={siteMetadata.keywords} />
       <Bio />
-      <Category
+      {/*<Category
         categories={categories}
         category={category}
         selectCategory={selectCategory}
-      />
+      />*/}
       <Contents
         posts={posts}
         countOfInitialPost={countOfInitialPost}

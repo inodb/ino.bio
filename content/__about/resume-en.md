@@ -4,10 +4,10 @@ date: 2019-1-27 16:21:13
 lang: 'en'
 ---
 
-# Your name
+# Ino de Bruijn
 
-<div align="center">
-
-_Thank you for reading my resume. If you want to contact me, Please send me an email._
-
-</div>
+Papers: https://scholar.google.com/citations?user=Pze5p28AAAAJ<br />
+CV: http://ino.pm/cv<br />
+GitHub: https://github.com/inodb<br />
+Twitter: https://twitter.com/inodb<br />
+Contact: ino@ino.bio<br />

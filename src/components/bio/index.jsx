@@ -1,6 +1,7 @@
 import React from 'react'
 import { StaticQuery, graphql, Link } from 'gatsby'
 import Image from 'gatsby-image'
+import avatar from './ino_typing.gif';
 
 import './index.scss'
 
@@ -14,14 +15,20 @@ export const Bio = () => (
         <div className="bio">
           <div className="author">
             <div className="author-description">
-              <Image
+              <span style={{ animation: 'flutter 3.5s infinite linear', opacity: 0.7, fontSize: 30, marginRight: -20, zIndex: 1 }}>
+                🔧
+              </span>
+              <img
                 className="author-image"
-                fixed={data.avatar.childImageSharp.fixed}
+                src={avatar}
                 alt={author}
                 style={{
                   borderRadius: `100%`,
                 }}
               />
+              <span style={{ animation: 'flutter 5s infinite linear', opacity: 0.7, fontSize: 30, marginLeft: -35, marginRight: 30, zIndex: 1 }}>
+                🧬
+              </span>
               <div className="author-name">
                 <span className="author-name-prefix">Written by</span>
                 <Link to={'/about'} className="author-name-content">
@@ -45,6 +52,11 @@ export const Bio = () => (
                       Facebook
                     </a>
                   )}
+                  {social.googlescholar && (
+                    <a href={`https://scholar.google.com/citations?user=${social.googlescholar}`}>
+                      Google Scholar
+                    </a>
+                  )}
                 </p>
               </div>
             </div>
@@ -57,13 +69,6 @@ export const Bio = () => (
 
 const bioQuery = graphql`
   query BioQuery {
-    avatar: file(absolutePath: { regex: "/profile.png/" }) {
-      childImageSharp {
-        fixed(width: 72, height: 72) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
     site {
       siteMetadata {
         author
@@ -73,6 +78,7 @@ const bioQuery = graphql`
           github
           medium
           facebook
+          googlescholar
         }
       }
     }
