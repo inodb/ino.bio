@@ -9,6 +9,7 @@ export const ThumbnailItem = ({ node }) => (
     <div key={node.fields.slug}>
       <h3>{node.frontmatter.title || node.fields.slug}</h3>
       <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
+      <a>Read more</a>
     </div>
   </Link>
 )

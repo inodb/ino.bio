@@ -4,10 +4,11 @@ date: 2019-10-25 17:10:98
 category: cbioportal
 ---
 
-Just got to the airport in Munich after a successful Google Summer of Code
-(GSoC) Mentor Summit. This is a yearly event where all open source
-organizations that participated in GSoC come together. There are a few
-scheduled sessions but the rest follows the unconference formula:
+Just got to the airport in Munich after a successful [Google Summer of Code
+(GSoC)](https://summerofcode.withgoogle.com/) Mentor Summit. This is a yearly
+event where all open source organizations that participated in GSoC come
+together. There are a few scheduled sessions but the rest follows the
+unconference formula:
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Really like the unconference idea: give participants a bunch of rooms and time slots and let them organize their own sessions. Participants know what will be useful to them! Doing an Open Source Bioinformatics session at 11am tomorrow (top left) <a href="https://t.co/OK0c9p1bTP">pic.twitter.com/OK0c9p1bTP</a></p>&mdash; 🔧 Ino de Bruijn 🧬 (@inodb) <a href="https://twitter.com/inodb/status/1185167867664318465?ref_src=twsrc%5Etfw">October 18, 2019</a></blockquote>
 
