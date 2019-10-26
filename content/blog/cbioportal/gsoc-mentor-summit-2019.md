@@ -125,13 +125,13 @@ There were a ton of other bioinformatics, life science and research/academics
 related organizations. [Angelica](https://twitter.com/angiee8aa) and me
 organized a session at the start of the conference that was simply a round of
 introductions, which was helpful in getting acquainted with these types of orgs
-at GSoC.  [Angelica](https://twitter.com/angiee8aa) made some great notes for
+at GSoC. [Angelica](https://twitter.com/angiee8aa) made great notes for
 our session:
 [link](https://docs.google.com/document/d/1c4LP_ZkHEx9HJ28qatzfcYbVjfQxHDi3VA5XeqouSEE).
 I ended up sitting down with [Egon](https://twitter.com/egonwillighagen) after.
-He organized some great sessions around wikidata and I was curious about using
-their API for pathway data shown at wikipathways.org to feed the querying of
-cancer genomic data by pathway in [cBioPortal](https://www.cbioportal.org):
+He organized a session around wikidata and I was curious about using their API
+for pathway data shown at wikipathways.org to feed the querying of cancer
+genomic data by pathway in [cBioPortal](https://www.cbioportal.org):
 
 ![](./images/query_pathway_cbioportal.png)
 
