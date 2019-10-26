@@ -11,7 +11,7 @@ module.exports = {
     facebook: ``, // Your Facebook account
     googlescholar: `Pze5p28AAAAJ` // Your Google Scholar account
   },
-  icon: `content/assets/felog.png`, // Add your favicon
+  icon: `content/assets/favicon.png`, // Add your favicon
   keywords: [`blog`],
   comment: {
     disqusShortName: '', // Your disqus-short-name. check disqus.com.
