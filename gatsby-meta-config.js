@@ -1,9 +1,9 @@
 module.exports = {
-  title: `🔧 Ino.Bio 🧬`,
+  title: `🔧 ino.bio 🧬`,
   description: `Blog about tools for cancer genomics`,
   author: `inodb`,
   introduction: `building tools for cancer genomics`,
-  siteUrl: `https://gatsby-starter-bee.netlify.com`, // Your blog site url
+  siteUrl: `https://ino.bio`, // Your blog site url
   social: {
     twitter: `inodb`, // Your Twitter account
     github: `inodb`, // Your GitHub account
