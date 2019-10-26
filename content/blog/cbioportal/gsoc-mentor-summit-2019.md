@@ -178,7 +178,7 @@ paper. Frequent publications of a tool can help give contributors academic
 credit.
 
 These were just a few personal highlights of the unconference sessions. There
-is a full list of sessions and notes contributed by partipants here:
+is a full list of sessions and notes contributed by participants here:
 
 https://docs.google.com/spreadsheets/d/18DwHPmqhh2rbxbbPA9OYitmlwsh3nI3azrngRuKfMGk/
 
