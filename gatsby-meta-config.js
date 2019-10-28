@@ -12,7 +12,7 @@ module.exports = {
     googlescholar: `Pze5p28AAAAJ` // Your Google Scholar account
   },
   icon: `content/assets/favicon.png`, // Add your favicon
-  keywords: [`blog`],
+  keywords: [`blog`,`bioinformatics`],
   comment: {
     disqusShortName: '', // Your disqus-short-name. check disqus.com.
     utterances: '', // Your repository for archive comment
@@ -26,5 +26,5 @@ module.exports = {
   share: {
     facebookAppId: '', // Add facebookAppId for using facebook share feature v3.2
   },
-  ga: '', // Add your google analytics tranking ID
+  ga: 'UA-151067668-1', // Add your google analytics tracking ID
 }
