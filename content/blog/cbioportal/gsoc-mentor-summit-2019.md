@@ -77,18 +77,22 @@ their students in under three minutes, see our two slides here:
 <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRFrVOWkw15JNQ-J1GATPc1bghAb1xZhdDsiPD9o1791dSopjUizfNw1utzjBIFmd0Ll7f9pFmX4Gee/embed?start=false&loop=true&delayms=3000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 The lightning talks are a great way to get a quick overview of all the
-different projects. My favorites were from Vicky Vergara from the Open Source
-Geospatial Foundation:
+different projects. My favorites were from [Vicky
+Vergara](https://twitter.com/VickyVvergara) from the [Open Source Geospatial
+Foundation](osgeo.org):
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Watch the video <a href="https://twitter.com/OSGeo?ref_src=twsrc%5Etfw">@OSGeo</a><br> <a href="https://twitter.com/gsoc?ref_src=twsrc%5Etfw">@gsoc</a><br> 2019 student Hang<br>working on pgRouting<a href="https://t.co/llNxKPufXQ">https://t.co/llNxKPufXQ</a></p>&mdash; vicky vergara (@VickyVvergara) <a href="https://twitter.com/VickyVvergara/status/1169997008389566465?ref_src=twsrc%5Etfw">September 6, 2019</a></blockquote>
 
-Another one that made me tear up a little because if its sheer goodness was the Public Lab one presented by Jeffrey Warren:
+and the Public Lab one presented by [Jeffrey Warren](https://twitter.com/jywarren):
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I LOVE this slide from <a href="https://twitter.com/jywarren?ref_src=twsrc%5Etfw">@jywarren</a> - growing your community is what -gets- your work done, not something you do -instead- of work. <a href="https://twitter.com/PublicLab?ref_src=twsrc%5Etfw">@PublicLab</a> encourages recent new contributors to prepare github issues for newbies - great onboarding path! <a href="https://twitter.com/hashtag/gsoc?src=hash&amp;ref_src=twsrc%5Etfw">#gsoc</a> <a href="https://t.co/08peKo7zEl">pic.twitter.com/08peKo7zEl</a></p>&mdash; yo yehudi🏳️‍🌈🇪🇺 (@yoyehudi) <a href="https://twitter.com/yoyehudi/status/1185465379776290818?ref_src=twsrc%5Etfw">October 19, 2019</a></blockquote>
 
 ## Unconference Sessions 🗣
 
-I had to go to the session Jeffrey organized about this to hear more and wasn't disappointed:
+### Managing a Welcoming Open Source Organization
+
+Since I enjoyed [Jeffrey](https://twitter.com/jywarren)'s lighning talk so
+much, I decided to go to his session:
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Amazing effort by <a href="https://twitter.com/PublicLab?ref_src=twsrc%5Etfw">@PublicLab</a> to make <a href="https://twitter.com/hashtag/opensource?src=hash&amp;ref_src=twsrc%5Etfw">#opensource</a> contributing more inclusive: <a href="https://t.co/Ddz9Pu41lb">https://t.co/Ddz9Pu41lb</a>. Great session by <a href="https://twitter.com/jywarren?ref_src=twsrc%5Etfw">@jywarren</a> at <a href="https://twitter.com/hashtag/GSOC?src=hash&amp;ref_src=twsrc%5Etfw">#GSOC</a>. Feeling inspired!</p>&mdash; 🔧 Ino de Bruijn 🧬 (@inodb) <a href="https://twitter.com/inodb/status/1185862129372585984?ref_src=twsrc%5Etfw">October 20, 2019</a></blockquote>
 
@@ -96,7 +100,7 @@ I learned about the importance of language when writing contributing docs e.g.
 
 <blockquote>"Please give back" vs "you have the ability to help others"</blockquote>
 
-As well as the importance of visual aids. The GitHub checks give big red errors
+as well as the importance of visual aids. The GitHub checks give big red errors
 when contributors submit their pull request which can be discouraging for
 newcomers:
 
@@ -104,34 +108,40 @@ newcomers:
 
 Showing this as a progress bar could be one way to make this less intimidating.
 
-It was also great to see in the session afterwards about *Bots for maintainers
-and contributor onboarding* organized by [Oleg
+It was great to see in the session afterwards about *Bots for maintainers and
+contributor onboarding* organized by [Oleg
 Nenashev](https://twitter.com/oleg_nenashev) that another major project like
 [Jenkins](https://github.com/jenkinsci) made great efforts to incorporate
 similar ideas in their organization. [Kai Blin](https://twitter.com/kaiblin)
 remarked that people find it sometimes less intimidating to see a bot message
-e.g. "improve the code styling here and here" over him mentioning that himself.
-[Jeffrey](https://twitter.com/jywarren) added to this that in his organization
-they try to let encouraging words come from a human. This leads to some
-interesting questions for an organization regarding what type of work should be
-done by bots versus humans.  On the one hand it might be nice to automate parts
-of Pull Request reviews by bots but on the other hand the same task could be
-good for a relatively new contributor to the project so they feel good about
-contributing and for a new contributor to feel appreciated by a human being. I
-imagine metrics around contributor acquisition and what they end up
+something than him messaging the exact same thing himself. As an example he
+mentioned linting, e.g. a message like "improve the code styling here and
+here" was usually appreciated more when it came from a bot.
+[Jeffrey](https://twitter.com/jywarren) added to this that in his
+organization they try to let encouraging words come from a human, since that
+is experienced as more welcoming. This leads to some interesting questions
+for an organization regarding what type of work should be done by bots versus
+humans. On the one hand it might be nice to automate parts of Pull Request
+reviews by bots but on the other hand the same task could be good for a
+relatively new contributor to the project so they feel good about
+contributing and for a new contributor to feel appreciated by a human being.
+I imagine metrics around contributor acquisition and what they end up
 contributing might help answer some of these questions.
+
+### Bioinformatics Related Sessions
 
 There were a ton of other bioinformatics, life science and research/academics
 related organizations. [Angelica](https://twitter.com/angiee8aa) and me
 organized a session at the start of the conference that was simply a round of
-introductions, which was helpful in getting acquainted with these types of orgs
-at GSoC. [Angelica](https://twitter.com/angiee8aa) made great notes for
+introductions, which was helpful in getting acquainted with these types of
+orgs at GSoC. [Angelica](https://twitter.com/angiee8aa) made great notes for
 our session:
 [link](https://docs.google.com/document/d/1c4LP_ZkHEx9HJ28qatzfcYbVjfQxHDi3VA5XeqouSEE).
-I ended up sitting down with [Egon](https://twitter.com/egonwillighagen) after.
-He organized a session around wikidata and I was curious about using their API
-for pathway data shown at wikipathways.org to feed the querying of cancer
-genomic data by pathway in [cBioPortal](https://www.cbioportal.org):
+I ended up sitting down with [Egon](https://twitter.com/egonwillighagen)
+after. He organized a session around [wikidata](wikidata.org) and I was
+curious about using their API for pathway data shown at
+[wikipathways.org](wikipathways.org) to feed the querying of cancer genomic
+data by pathway in [cBioPortal](https://www.cbioportal.org):
 
 ![](./images/query_pathway_cbioportal.png)
 
@@ -141,13 +151,14 @@ We actually had a GSoC project around integrating
 [here](https://github.com/cBioPortal/GSoC/wiki/Google-Summer-of-Code-2019-Wrap-up#project-2-integrating-pathwaymapper-into-cbioportal)).
 Pathway mapper provides a great interface for people to curate their own
 pathways and subsequently query them in
-[cBioPortal](https://www.cbioportal.org). Extending that with pathway data from
-[wikidata](https://www.wikidata.org/) seems like a great project. The neat
-thing is that wikidata connects all kinds of different entities with each
-other, allowing for instance to connect pathways to publications. That might
-provide for another interesting project to e.g. point users querying particular
-pathways on cBioPortal to relevant literature. I am on the wikipathways slack
-now so the first contact has been made 🙂
+[cBioPortal](https://www.cbioportal.org). Extending that with pathway data
+from [wikidata](https://www.wikidata.org/) seems like a great project. The
+neat thing is that wikidata connects all kinds of different entities with
+each other, allowing for instance to connect pathways to publications. That
+might provide for another interesting project to e.g. point users querying
+particular pathways on [cBioPortal](https:///www.cbioprotal.org) to relevant
+literature. I am on the wikipathways slack now so the first contact has been
+made 🙂
 
 Collaborations with other organizations is something that came up during the
 session on [universities as mentoring
