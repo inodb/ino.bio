@@ -91,7 +91,7 @@ and the Public Lab one presented by [Jeffrey Warren](https://twitter.com/jywarre
 
 ### Managing a Welcoming Open Source Organization
 
-Since I enjoyed [Jeffrey](https://twitter.com/jywarren)'s lighning talk so
+Since I enjoyed [Jeffrey](https://twitter.com/jywarren)'s lightning talk so
 much, I decided to go to his session:
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Amazing effort by <a href="https://twitter.com/PublicLab?ref_src=twsrc%5Etfw">@PublicLab</a> to make <a href="https://twitter.com/hashtag/opensource?src=hash&amp;ref_src=twsrc%5Etfw">#opensource</a> contributing more inclusive: <a href="https://t.co/Ddz9Pu41lb">https://t.co/Ddz9Pu41lb</a>. Great session by <a href="https://twitter.com/jywarren?ref_src=twsrc%5Etfw">@jywarren</a> at <a href="https://twitter.com/hashtag/GSOC?src=hash&amp;ref_src=twsrc%5Etfw">#GSOC</a>. Feeling inspired!</p>&mdash; 🔧 Ino de Bruijn 🧬 (@inodb) <a href="https://twitter.com/inodb/status/1185862129372585984?ref_src=twsrc%5Etfw">October 20, 2019</a></blockquote>
@@ -100,9 +100,15 @@ I learned about the importance of language when writing contributing docs e.g.
 
 <blockquote>"Please give back" vs "you have the ability to help others"</blockquote>
 
-as well as the importance of visual aids. The GitHub checks give big red errors
-when contributors submit their pull request which can be discouraging for
-newcomers:
+The former feels like a request whereas the latter emphasizes your unique
+abilities. For an example of that see
+[code.publiclab.org](https://code.publiclab.org):
+
+![](./images/codepubliclab.png)
+
+Visual aids are very important as well for welcoming new contributors to your
+project. The GitHub checks give big red errors when contributors submit their
+pull request which can be discouraging:
 
 ![](./images/github_checks.png)
 
@@ -169,19 +175,21 @@ between our group and Bilkent University. [The GDC import
 project](https://github.com/cBioPortal/GSoC/wiki/Google-Summer-of-Code-2019-Wrap-up#project-5-etl-pipeline-development-for-tcga-data-from-gdc-portal)
 was a first time collaboration between our group and the GDC team. This is a
 great way to involve more people in the open source process. I believe the
-academic world and open source have much to learn from each other. Another
-thing mentioned was that open source should probably part of the curriculum.  I
-did my undergrad in computer science and can't remember any course that talked
-about open source and the process around contributing code. It might be
-different today but if not that should really change. [Software
-carpentry](https://software-carpentry.org/) is a great resource for educating
-scientists on this. For next year's GSoC I'd like to try and involve more
-scientists.  Another thing that [Egon](https://twitter.com/egonwillighagen)
-mentioned is that PhD students often list travel grants on their CV so having
-submitted a successful GSoC organization application is definitely something
-one can include there as well.  Other ways to get academic credit for GSoC
-would be to publish papers on the work. We have successfully published on e.g.
-the [CPTAC integration in
+academic world can learn a lot from the open source world. Open source
+development for instance often starts out in the open. There is a movement in
+the academic world to be more open, but it is usually only at time of
+publication. Somebody mentioned during the session that open source should
+probably be part of the curriculum. I did my undergrad in computer science and
+can't remember any course that talked about open source and the process around
+contributing code. It might be different today but if not that should really
+change. [Software carpentry](https://software-carpentry.org/) is a great
+resource for educating scientists on this. For next year's GSoC I'd like to try
+and involve more scientists.  Another thing that
+[Egon](https://twitter.com/egonwillighagen) mentioned is that PhD students
+often list travel grants on their CV so having submitted a successful GSoC
+organization application is definitely something one can include there as well.
+Other ways to get academic credit for GSoC would be to publish papers on the
+work. We have successfully published on e.g.  the [CPTAC integration in
 cBioPortal](https://www.mcponline.org/content/18/9/1893.abstract) and the [G2S
 webservice](https://academic.oup.com/bioinformatics/article/34/11/1949/4827683).
 Another approach for open source tools is to list all contributors on the
@@ -209,7 +217,7 @@ familiar yet with either. Figuring out some onboarding procedure for each of
 those would be great.
 - Look into other open source programs such as [Outreachy](https://outreachy.org/), specifically for underrepresented communities and Google Code In for high school students.
 - Use wikidata to pull pathway data and incorporate in cBioPortal. If complicated this could be a good GSoC project for next year.
-- Try to include more scientists/acedemics in GSoC. Try to convince them how it
+- Try to include more scientists/academics in GSoC. Try to convince them how it
   could be beneficial academically. Comentoring projects seems like a good
 approach. Need to start thinking about projects early.
 - Some bots to try: welcomebot, releasedrafter, the CircleCI artifact bot to
