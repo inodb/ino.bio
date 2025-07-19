@@ -1,0 +1,18 @@
+@use '../../styles/variables.scss' as *;
+
+.post-header {
+  h1 {
+    margin-bottom: 8px;
+  }
+
+  .post-meta {
+    margin-bottom: 24px;
+    
+    .post-date {
+      font-size: 90%;
+      color: $middle-gray;
+      opacity: 0.8;
+      font-weight: normal;
+    }
+  }
+}
