@@ -5,11 +5,12 @@ module.exports = {
   introduction: `building tools for cancer genomics`,
   siteUrl: `https://ino.bio`, // Your blog site url
   social: {
-    twitter: `inodb`, // Your Twitter account
+    linkedin: `inodb`, // Your LinkedIn account
     github: `inodb`, // Your GitHub account
     medium: ``, // Your Medium account
     facebook: ``, // Your Facebook account
-    googlescholar: `Pze5p28AAAAJ` // Your Google Scholar account
+    googlescholar: `Pze5p28AAAAJ`, // Your Google Scholar account
+    cv: `https://cv.ino.bio` // Your CV link
   },
   icon: `content/assets/favicon.png`, // Add your favicon
   keywords: [`blog`,`bioinformatics`],
