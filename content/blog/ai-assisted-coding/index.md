@@ -9,7 +9,7 @@ Been using AI-assisted coding across a bunch of software projects, from quick pr
 
 🚀 **Amazing for greenfield and prototyping**
 
-They speed up early development dramatically. What used to take weeks can often be done in days or hours. Boilerplate, scaffolding, docs—they handle it all surprisingly well. In the cBioPortal team we leveraged Lovable to build websites, including an installation map (https://lnkd.in/dDhMPAzN, by Zain Nasir) and an About Page (https://lnkd.in/dE6s5kJ9, with help from Melissa Nguyen), occasionally going back to VSCode to edit source code directly. I also used VSCode CoPilot to build some command line tools/scripts, such as a parquet file generator (https://lnkd.in/dH6_yvTc).
+They speed up early development dramatically. What used to take weeks can often be done in days or hours. Boilerplate, scaffolding, docs—they handle it all surprisingly well. In the cBioPortal team we leveraged Lovable to build websites, including an [installation map](https://www.cbioportal.org/installations) (by Zain Nasir) and an [About Page](https://about.cbioportal.org/) (with help from Melissa Nguyen), occasionally going back to VSCode to edit source code directly. I also used VSCode CoPilot to build some command line tools/scripts, such as a [parquet file generator](https://github.com/cBioPortal/cbiohubpy).
 
 🏗️ **Struggle with large, mature codebases**
 
