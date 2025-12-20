@@ -4,7 +4,9 @@ date: 2025-12-20 12:00:00
 category: cbioportal
 ---
 
-We recently built an [automated pipeline](https://github.com/cBioPortal/cbioportal-article-classification) to analyze how researchers cite and use [cBioPortal](https://www.cbioportal.org) in scientific literature. The system uses Claude via AWS Bedrock to classify papers by cancer type, usage patterns, and data sources. Here are some findings from the report.
+Measuring research software impact is hard. Software often gets mentioned without formal citation, or used programmatically without any mention at all—challenges explored in work from [CZI](https://arxiv.org/abs/2209.00693) and [Afiaz et al.](https://pubmed.ncbi.nlm.nih.gov/39067017/). As a user-facing tool for accessing cancer genomics data, cBioPortal has been cited many times, providing a unique opportunity to analyze how it's used. This expands upon conventional usage tracking via Google Analytics or Heap, and can paint a clearer picture of how these tools help push science forward.
+
+We built an [automated pipeline](https://github.com/cBioPortal/cbioportal-article-classification) using Claude via AWS Bedrock to classify papers by cancer type, usage patterns, and data sources. Here are some findings.
 
 For the full report with the latest data and visualizations, see the [usage report](https://github.com/cBioPortal/cbioportal-article-classification/blob/main/output/reports/usage_report.md) in the repository.
 
