@@ -4,7 +4,9 @@ date: 2025-12-20 12:00:00
 category: cbioportal
 ---
 
-Measuring research software impact is hard. Software often gets mentioned without formal citation, or used programmatically without any mention at all—challenges explored in work from [CZI](https://arxiv.org/abs/2209.00693) and [Afiaz et al.](https://pubmed.ncbi.nlm.nih.gov/39067017/). As a user-facing tool for accessing cancer genomics data, cBioPortal has been cited many times, providing a unique opportunity to analyze how it's used. This expands upon conventional usage tracking via Google Analytics or Heap, and can paint a clearer picture of how these tools help push science forward.
+Measuring research software impact is hard. Software often gets mentioned without formal citation, or used programmatically without any mention at all—challenges explored by [Afiaz et al.](https://pubmed.ncbi.nlm.nih.gov/39067017/). The [CZI Software Mentions dataset](https://arxiv.org/abs/2209.00693) links text mentions in papers to software entities. We expand on this by classifying *how* cBioPortal is used—which cancer types, analysis methods, and data sources researchers work with.
+
+As a user-facing website for accessing cancer genomics data, cBioPortal has been cited many times, providing a unique opportunity to analyze usage patterns. This goes beyond conventional tracking via Google Analytics or Heap, and aims to paint a clearer picture of how these tools help push science forward.
 
 We built an [automated pipeline](https://github.com/cBioPortal/cbioportal-article-classification) using Claude via AWS Bedrock to classify papers by cancer type, usage patterns, and data sources. Here are some findings.
 
