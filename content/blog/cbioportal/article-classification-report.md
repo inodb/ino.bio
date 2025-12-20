@@ -6,6 +6,8 @@ category: cbioportal
 
 We recently built an [automated pipeline](https://github.com/cBioPortal/cbioportal-article-classification) to analyze how researchers cite and use [cBioPortal](https://www.cbioportal.org) in scientific literature. The system uses Claude via AWS Bedrock to classify papers by cancer type, usage patterns, and data sources. Here are some findings from the report.
 
+For the full report with the latest data and visualizations, see the [usage report](https://github.com/cBioPortal/cbioportal-article-classification/blob/main/output/reports/usage_report.md) in the repository.
+
 ## The Dataset
 
 The analysis examined **13,890 unique papers** (14,834 total citations) citing cBioPortal from 2012-2026. Most classifications (94.5%) relied on abstracts since full PDFs aren't always accessible. One notable limitation: the PubMed API returns substantially fewer citations than the website shows—407 versus 750 for one publication.
