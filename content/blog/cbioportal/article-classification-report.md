@@ -18,30 +18,30 @@ The analysis examined **13,890 unique papers** (14,834 total citations) citing c
 
 ## How Researchers Use the Platform
 
-The majority of papers cite cBioPortal without explicit usage details (8,389 papers), followed by web-based analysis (4,393) and visualization (2,130). Direct API access was mentioned in only 21 papers—though our internal usage stats show API usage is actually quite high.
+The majority of papers cite cBioPortal without explicit usage details (6,089 papers), followed by web-based analysis (5,930) and visualization (3,751). Direct API access was mentioned in only 82 papers—though our internal usage stats show API usage is actually quite high.
 
 In terms of analysis types:
-- **Gene expression analysis**: 10,628 papers
-- **Survival analysis**: 7,324 papers
-- **Mutation analysis**: 6,150 papers
+- **Gene expression analysis**: 10,549 papers
+- **Mutation analysis**: 7,282 papers
+- **Survival analysis**: 7,050 papers
 
-**TP53** was the most frequently queried gene (779 papers), followed by KRAS (384) and EGFR (316).
+**TP53** was the most frequently queried gene (1,062 papers), followed by KRAS (545) and EGFR (444).
 
 ## Cancer Types
 
-"Other solid tumor" led the classifications (4,858 papers), with pan-cancer studies second (2,916). Breast cancer ranked third (2,374), followed by lung cancer (1,505) and colorectal cancer (1,079).
+"Other solid tumor" led the classifications (2,583 papers), with pan-cancer studies second (1,442). Breast cancer ranked third (1,151), followed by lung cancer (779) and colorectal cancer (541).
 
 ## Data Sources
 
-TCGA dominated heavily with 8,248 papers. Multiple data sources were used in 4,878 studies. Custom/private data appeared in 3,784 papers. Specialized datasets like METABRIC, MSK-IMPACT, and ICGC saw less adoption, with GENIE used in only 87 papers.
+TCGA dominated heavily with 8,993 papers. Multiple data sources were used in 5,157 studies. Custom/private data appeared in 2,990 papers.
 
 ## Geographic Distribution
 
-USA and China led with 4,261 and 4,034 papers respectively. The United Kingdom (1,209), Germany (726), and Canada (560) rounded out the top five. Funding predominantly came from NCI NIH HHS (10,349 papers).
+USA and China led with 2,229 and 1,754 papers respectively. The United Kingdom (591), Germany (344), and Canada (282) rounded out the top five. Funding predominantly came from NCI NIH HHS (6,079 papers).
 
 ## Publication Venues
 
-*Cancers* published the most cBioPortal-citing research (617 papers), followed by *Scientific Reports* (567) and *Oncotarget* (445). Most citing works were journal articles (12,113), with reviews comprising 1,174.
+*Oncotarget* published the most cBioPortal-citing research (363 papers), followed by *Scientific Reports* (287) and *Cancers* (207). Most citing works were journal articles (5,881), with reviews comprising 585.
 
 ## Technical Notes
 
