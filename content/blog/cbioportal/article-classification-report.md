@@ -14,7 +14,7 @@ The analysis examined **13,890 unique papers** (14,834 total citations) citing c
 
 ## How Researchers Use the Platform
 
-The majority of papers cite cBioPortal without explicit usage details (8,389 papers), followed by web-based analysis (4,393) and visualization (2,130). Direct API access remains rare—only 21 papers.
+The majority of papers cite cBioPortal without explicit usage details (8,389 papers), followed by web-based analysis (4,393) and visualization (2,130). Direct API access was mentioned in only 21 papers—though our internal usage stats show API usage is actually quite high.
 
 In terms of analysis types:
 - **Gene expression analysis**: 10,628 papers
