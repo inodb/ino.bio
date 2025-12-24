@@ -18,7 +18,7 @@ The analysis examined **13,890 papers** citing cBioPortal from 2012-2026. Top an
 
 ## Reflections
 
-This experiment made me realize how complicated it is to analyze software usage from publications. Many articles detail *what data* they used rather than *how they used cBioPortal*. So it's debatable how useful this approach is for determining whether specific UI features are effective.
+This experiment made me appreciate how complicated it is to analyze software usage from publications. Many articles detail *what data* they used rather than *how they used cBioPortal*. In its current form, this isn't as useful for identifying UI usage patterns—though detecting cBioPortal visualizations in paper figures (e.g. OncoPrints, MutationMapper lollipop plots) could help.
 
 I haven't verified many of the findings yet, but it's promising that some check out with orthogonal lines of evidence. Google Analytics also shows USA and China as top users. A survey from a few years ago indicated strong interest in gene expression analysis, and our [second most popular YouTube video](https://youtu.be/YUxVv6pkxD4?si=tcMPiA4U53lebhe5) is about gene expression.
 
