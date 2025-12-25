@@ -10,7 +10,9 @@ As a user-facing website for accessing cancer genomics data, cBioPortal has been
 
 ## Implementation
 
-I vibe coded an [automated pipeline](https://github.com/cBioPortal/cbioportal-article-classification) using [Claude Code](https://claude.ai/code) which leverages AWS Bedrock to classify papers. The idea was to extract text from PDFs and have an LLM categorize each paper by cancer type, usage patterns, and data sources. This turned out to be more complicated than expected—I have little experience with PDF parsing and getting clean text from academic papers is surprisingly tricky. A follow-up could analyze HTML from PMC, which seemed to perform better in initial tests.
+The idea was simple: take all papers that cite one of the cBioPortal publications, download the PDF for each open access paper, extract the text, and have an LLM classify each paper by cancer type, usage patterns, and data sources. I vibe coded an [automated pipeline](https://github.com/cBioPortal/cbioportal-article-classification) using [Claude Code](https://claude.ai/code) which leverages AWS Bedrock for classification.
+
+As usual, it initially seemed to work with relatively little effort—but of course parsing PDFs turned out to be much harder than I anticipated. In retrospect, I should have maybe just used the structured HTML from PMC.
 
 ## Some Findings
 
