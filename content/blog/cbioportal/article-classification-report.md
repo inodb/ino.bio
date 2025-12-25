@@ -8,7 +8,7 @@ Measuring research software impact is hard. Software often gets mentioned withou
 
 As a user-facing website for accessing cancer genomics data, cBioPortal has been cited many times, providing a unique opportunity to analyze usage patterns. This goes beyond conventional tracking via Google Analytics or Heap, and aims to paint a clearer picture of how these tools help push science forward.
 
-I vibe coded an [automated pipeline](https://github.com/cBioPortal/cbioportal-article-classification) using [Claude Code](https://claude.ai/code) and Claude via AWS Bedrock to classify papers. The idea was to extract text from PDFs and have Claude categorize each paper by cancer type, usage patterns, and data sources. This turned out to be more complicated than expected—I have little experience with PDF parsing and getting clean text from academic papers is surprisingly tricky. A follow-up could analyze HTML from PMC, which seemed to perform better in initial tests.
+I vibe coded an [automated pipeline](https://github.com/cBioPortal/cbioportal-article-classification) using [Claude Code](https://claude.ai/code) which leverages AWS Bedrock to classify papers. The idea was to extract text from PDFs and have an LLM categorize each paper by cancer type, usage patterns, and data sources. This turned out to be more complicated than expected—I have little experience with PDF parsing and getting clean text from academic papers is surprisingly tricky. A follow-up could analyze HTML from PMC, which seemed to perform better in initial tests.
 
 For the full report with the latest data and visualizations, see the [usage report](https://github.com/cBioPortal/cbioportal-article-classification/blob/main/output/reports/usage_report.md).
 
