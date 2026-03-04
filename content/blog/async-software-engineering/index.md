@@ -50,11 +50,10 @@ needs guidance. I'm coding way more from my phone now.
 can message from anywhere—WhatsApp, Telegram, Slack, etc. I set mine up with a
 [coding agent
 skill](https://github.com/openclaw/openclaw/blob/main/skills/coding-agent/SKILL.md)
-so it can open PRs on GitHub. You'll need a VPS to run it on—I use
-[OVHcloud](https://www.ovhcloud.com/), about ~$5/month for a cheap instance.
-I'd recommend giving it a separate user account on your server with limited
-priviliges, a separate Google account, and a separate GitHub account to keep
-things isolated.
+so it can open PRs on GitHub. The VPS setup is pretty much the same as described
+in the complex tasks section below, except you'll want to create a separate user
+with more limited permissions, a separate Google account, and a separate GitHub
+account to keep things isolated.
 
 Fair warning: I'd only recommend this to tinkerers with some sysadmin
 experience right now. There are many potential security issues when you're
@@ -62,25 +61,26 @@ giving an AI agent access to all kinds of services. Prompt injection becomes a
 major concern. I'm sure this will be available to more people in a more secure
 manner soon.
 
-📟 **Complex tasks: VPS + Termux + mosh**
+📟 **Complex tasks: VPS + tmux + mosh**
 
-For the more involved multi-project tasks, I use another VPS. The setup is
-[tmux](https://github.com/tmux/tmux/wiki) + [Claude
-Code](https://docs.anthropic.com/en/docs/claude-code), with one tmux window per
-project. From my Android phone I use [Termux](https://termux.dev/) with
-[mosh](https://mosh.org/) to connect—mosh is way more resilient than plain SSH
-when you're on a flaky mobile connection.
-
-One nice trick: you can talk to Claude Code using Gboard's dictation. In Termux
-you need to swipe left on the extra keys row to get to the regular keyboard,
-but once you're there voice input works surprisingly well for giving
-instructions.
+1. **Get a VPS** — I use [OVHcloud](https://www.ovhcloud.com/), but any provider works. You want enough RAM for your coding agents to run comfortably.
+2. **Set up a user and SSH** — Create a non-root user, set up SSH keys, and configure your firewall. Same as you'd do for any new server.
+3. **Install your dependencies** — Git, Node, Python, Docker, whatever your projects need. I keep a [dotfiles repo](https://github.com/inodb/dotfiles) to help bootstrap new machines.
+4. **Install [tmux](https://github.com/tmux/tmux/wiki)** — This is what lets you keep multiple sessions alive. One window per project.
+5. **Install [mosh](https://mosh.org/)** — Way more resilient than plain SSH, especially on flaky mobile connections.
+6. **Install your coding agent(s)** — [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [GitHub Copilot CLI](https://docs.github.com/en/copilot), [Codex](https://openai.com/index/codex/), [Gemini CLI](https://github.com/google-gemini/gemini-cli), whichever you prefer.
+7. **Connect from your phone** — On Android I use [Termux](https://termux.dev/) with mosh. One nice trick: you can talk to Claude Code using Gboard's dictation. In Termux you need to swipe left on the extra keys row to get to the regular keyboard, voice input works surprisingly well for giving instructions.
 
 ## Tips and tricks
 
 🔄 **Extending sessions with the Ralph loop**
 
-One thing with AI coding agents is that they tend to stop and wait for input. The [Ralph loop](https://github.com/frankbria/ralph-claude-code) helps with that—it catches when Claude Code tries to exit and feeds the prompt back in, so it keeps iterating on the task. Great for longer jobs where you want the agent to just keep going. My longest unsupervised run so far has been about an hour.
+One thing with AI coding agents is that they tend to stop and wait for input.
+The [Ralph loop](https://github.com/frankbria/ralph-claude-code) helps with
+that—it catches when Claude Code tries to exit and feeds the prompt back in, so
+it keeps iterating on the task. Great for longer jobs where you want the agent
+to just keep going. My longest unsupervised run so far has been about an hour.
+Hoping to get to the level of day long runs at some point (tips anyone?).
 
 🛠️ **Configure your own workflow**
 
