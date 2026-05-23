@@ -52,6 +52,7 @@ export const Bio = () => (
                       Google Scholar
                     </a>
                   )}
+                  <Link to="/presentations">Presentations</Link>
                   {social.medium && (
                     <a href={`https://medium.com/${social.medium}`}>Medium</a>
                   )}

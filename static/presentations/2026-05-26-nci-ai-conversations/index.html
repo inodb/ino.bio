@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Assisted Vibe Coding in Cancer Genomics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --accent: #1a75bc;
+  --accent-dark: #155a8a;
+  --accent-light: #eef6fc;
+  --teal: #3c8c5e;
+  --teal-light: #edf7f1;
+  --navy: #2c3e50;
+  --border: #e5e7eb;
+  --card-bg: #f8fafc;
+  --font: 'Inter', -apple-system, sans-serif;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  font-family: var(--font);
+  font-size: 16px;
+  color: var(--text);
+  overflow: hidden;
+  user-select: none;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.deck {
+  position: relative;
+  width: 57vw;
+  height: 57vh;
+  zoom: 1.75;
+  z-index: 1;
+}
+
+/* ── SLIDE BASE ── */
+.slide {
+  position: absolute; inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: translateY(12px);
+  padding: 60px 80px;
+  background: var(--bg);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.slide.exit {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+/* ── TITLE SLIDE ── */
+.slide-title {
+  justify-content: center;
+  padding: 60px 80px;
+}
+
+.slide-title h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  line-height: 1.25;
+  color: var(--navy);
+  margin-bottom: 40px;
+}
+
+.slide-title h1 strong {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.slide-title .divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--teal));
+  margin-bottom: 32px;
+}
+
+.slide-title .author {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.slide-title .affiliation {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.slide-title .event {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
+}
+
+.slide-title .logos {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+/* ── CONTENT SLIDES ── */
+.slide-content {
+  justify-content: flex-start;
+}
+
+.slide-content h2 {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--navy);
+  margin-bottom: 24px;
+}
+
+.slide-content h2 strong {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.slide-content p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #374151;
+  line-height: 1.7;
+  max-width: 700px;
+  margin-bottom: 16px;
+}
+
+.slide-content .section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+
+/* Bullets */
+.bullets {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.bullets li {
+  font-size: 14px;
+  font-weight: 400;
+  color: #374151;
+  line-height: 1.6;
+  padding: 6px 0 6px 20px;
+  position: relative;
+}
+
+.bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: #374151;
+}
+
+.card strong {
+  display: block;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.card a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 12px;
+}
+
+/* Highlight */
+.highlight {
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  border-radius: 4px;
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #374151;
+  margin: 16px 0;
+}
+
+.highlight strong {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+/* Question callout */
+.question {
+  background: #fefce8;
+  border-left: 3px solid #ca8a04;
+  border-radius: 4px;
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #713f12;
+  margin: 16px 0;
+}
+
+/* Two-column */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 14px;
+}
+
+/* Stats */
+.stat-row {
+  display: flex;
+  gap: 32px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+
+.stat-val {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* Image */
+.slide-img {
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  max-width: 100%;
+}
+
+/* Final slide */
+.slide-final {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.slide-final h2 {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 300;
+  color: var(--navy);
+  margin-bottom: 28px;
+}
+
+.slide-final h2 strong {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.slide-final .discussion-list {
+  list-style: none;
+  padding: 0;
+  counter-reset: item;
+}
+
+.slide-final .discussion-list li {
+  counter-increment: item;
+  font-size: 14px;
+  font-weight: 400;
+  color: #374151;
+  line-height: 1.6;
+  padding: 8px 0 8px 28px;
+  position: relative;
+}
+
+.slide-final .discussion-list li::before {
+  content: counter(item);
+  position: absolute;
+  left: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.slide-final .links {
+  margin-top: auto;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.slide-final .link-pill {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 6px 14px;
+  text-decoration: none;
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  bottom: 24px; right: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 6px 14px;
+  backdrop-filter: blur(6px);
+}
+
+.nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.15s;
+  line-height: 1;
+  color: var(--text);
+}
+
+.nav button:hover { background: #f3f4f6; }
+.nav button:disabled { opacity: 0.25; cursor: default; }
+
+.nav-counter {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  min-width: 48px;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+/* ── PRINT ── */
+@media print {
+  @page { size: landscape; margin: 0; }
+  html, body { overflow: visible; width: 100%; height: auto; }
+  .nav { display: none !important; }
+  .deck { width: 100%; height: auto; zoom: 1; position: static; overflow: visible; }
+  .slide {
+    position: relative !important;
+    inset: auto !important;
+    width: 100vw;
+    min-height: 100vh;
+    opacity: 1 !important;
+    transform: none !important;
+    page-break-after: always;
+    break-after: page;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    display: flex !important;
+    box-sizing: border-box;
+    padding: 60px 80px !important;
+    justify-content: center !important;
+  }
+  .slide.exit { display: flex !important; }
+  .slide:last-child { page-break-after: avoid; break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- SLIDE 0: Title -->
+  <div class="slide slide-title active" data-slide="0">
+    <div class="event">Cancer AI Conversations · May 26, 2026</div>
+    <h1>AI-Assisted <strong>Vibe Coding</strong><br>in Cancer Genomics</h1>
+    <div class="divider"></div>
+    <div class="author">Ino de Bruijn, PhD</div>
+    <div class="affiliation">Data Visualization Team Lead | Cancer Data Science Initiative<br>Memorial Sloan Kettering Cancer Center</div>
+    <div class="logos">
+      <img src="msk-logo.png" alt="Memorial Sloan Kettering Cancer Center" style="height:36px;">
+      <img src="cbioportal-logo.png" alt="cBioPortal" style="height:36px;">
+      <span style="margin-left:auto; font-size:11px; color:#aaa; font-style:italic;">* this presentation was fully vibe-coded</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 1: Context -->
+  <div class="slide slide-content" data-slide="1">
+    <div class="section-label">Context</div>
+    <h2>cBioPortal for <strong>Cancer Genomics</strong></h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center;">
+      <div>
+        <img src="cbioportal-overview.png" alt="Goal of cBioPortal" class="slide-img" />
+      </div>
+      <div>
+        <div class="stat-row">
+          <div><div class="stat-val">40K+</div><div class="stat-label">monthly users</div></div>
+          <div><div class="stat-val">300+</div><div class="stat-label">contributors</div></div>
+          <div><div class="stat-val">15+</div><div class="stat-label">years of development</div></div>
+          <div><div class="stat-val">100+</div><div class="stat-label">global instances</div></div>
+        </div>
+        <p style="margin-top:16px;">Open-source platform for exploring cancer genomics data — mutations, copy-number, expression, clinical outcomes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: Simple Web Pages -->
+  <div class="slide slide-content" data-slide="2">
+    <div class="section-label">Early 2025</div>
+    <h2><strong>Simple Web Pages</strong> — solved</h2>
+    <p>Landing pages, dashboards, interactive maps — built in hours, not weeks.</p>
+    <div class="card-grid">
+      <div class="card">
+        <strong>🌐 about.cbioportal.org</strong>
+        AI-generated landing page, maintained through prompts.
+        <a href="https://about.cbioportal.org"><img src="about-page.png" alt="about.cbioportal.org" style="width:100%; margin-top:8px; border-radius:4px;" /></a>
+      </div>
+      <div class="card">
+        <strong>🗺️ Installation Map</strong>
+        Originally a summer-long project — rebuilt by a new engineer in a few hours.
+        <a href="https://installationmap.netlify.app"><img src="installation-map.png" alt="cBioPortal Installation Map" style="width:100%; margin-top:8px; border-radius:4px;" /></a>
+      </div>
+    </div>
+    <div class="highlight" style="margin-top:16px;">
+      Models weren't yet good enough for a large existing codebase — but any WordPress-like site was <strong>already fully vibe-codeable</strong>.
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Production features -->
+  <div class="slide slide-content" data-slide="3">
+    <div class="section-label">Mid-2025</div>
+    <h2>Features in a <strong>mature codebase</strong></h2>
+    <p>Claude Code launched May 2025. Agents could now navigate and extend 300K+ lines of existing code.</p>
+    <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:20px; align-items:center; margin-top:8px;">
+      <div>
+        <img src="embeddings-viewer.png" alt="Similarity Maps — embeddings viewer in cBioPortal" class="slide-img" style="border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.1);" />
+      </div>
+      <div>
+        <div class="highlight">
+          <strong>Example:</strong> New Similarity Maps feature for cBioPortal — fully vibe-coded with Claude Code.
+        </div>
+        <ul class="bullets" style="margin-top:12px;">
+          <li>Agents read existing patterns, follow conventions, write tests</li>
+          <li>Engineers who stopped coding day-to-day can ship features again</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Rewrites -->
+  <div class="slide slide-content" data-slide="4">
+    <div class="section-label">Late 2025 / Early 2026</div>
+    <h2>Software <strong>rewrites</strong></h2>
+    <div class="two-col">
+      <div>
+        <p style="margin-bottom:12px;"><strong style="color:var(--navy);">vibe-vep</strong> — Ensembl VEP rewrite:</p>
+        <ul class="bullets">
+          <li>Perl → Go, single binary (~95MB vs 17GB)</li>
+          <li>99.8% concordance, 14K variants/sec</li>
+          <li>Built at a hackathon, refined with Claude Code</li>
+        </ul>
+        <p style="font-size:12px; margin-top:12px;"><a href="https://github.com/inodb/vibe-vep" style="color:var(--accent);">github.com/inodb/vibe-vep</a></p>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:10px;">
+          <strong>⚡ fastVEP</strong> — independent preprint, same idea
+        </div>
+        <div class="card" style="margin-bottom:10px;">
+          <strong>📊 RustQC</strong> — MultiQC in Rust, 63× faster
+        </div>
+        <div class="card">
+          <strong>📜 rewrites.bio</strong> — community guidelines for responsible rewrites
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Agents consuming resources -->
+  <div class="slide slide-content" data-slide="5">
+    <div class="section-label">2026</div>
+    <h2>Agents consuming <strong>our resources</strong></h2>
+    <div class="card-grid">
+      <div class="card">
+        <strong>💬 chat.cbioportal.org</strong>
+        Natural language → SQL over cancer genomics data. Unlocks access for non-programmers.
+        <div style="margin-top:8px;">
+          <img src="chat-cbioportal-1.png" alt="Chat query" style="width:100%; border-radius:4px;" />
+          <img src="chat-cbioportal-2.png" alt="Chat response" style="width:100%; margin-top:4px; border-radius:4px;" />
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--accent);">
+        <strong>📈 Uninvited agent traffic</strong>
+        Agents don't paginate, don't rate-limit, make redundant calls. Had to spin up separate servers.
+        <img src="agent-traffic.png" alt="Memory spike from agent traffic" style="width:100%; margin-top:8px; border-radius:4px;" />
+      </div>
+    </div>
+    <div class="highlight" style="margin-top:16px;">
+      The API used to be for programmers. Now <strong>any researcher</strong> can point an agent at it.
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Open source -->
+  <div class="slide slide-content" data-slide="6" style="position:relative;">
+    <div class="section-label">Open Source</div>
+    <h2>Open source <strong>under pressure</strong></h2>
+    <div class="question">
+      ⚠️ Google Summer of Code 2026: Agents are so good at "good first issues" that evaluating candidates is near-impossible.
+    </div>
+    <ul class="bullets" style="margin-top:12px;">
+      <li>Far more PRs — hard to keep up with review volume</li>
+      <li>Agent-assisted contributions look like expert ones</li>
+      <li>How do you mentor the next generation?</li>
+    </ul>
+    <img src="gsoc-logo.svg" alt="Google Summer of Code" style="position:absolute; bottom:32px; right:40px; height:36px; opacity:0.7;">
+  </div>
+
+  <!-- SLIDE 7: What should we build? -->
+  <div class="slide slide-content" data-slide="7">
+    <div class="section-label">The Big Question</div>
+    <h2>What should we <strong>build?</strong></h2>
+    <p>Before: our team built software for cancer researchers.<br>Now: researchers can build much of it themselves.</p>
+    <div class="card-grid" style="margin-top:12px; grid-template-columns:1fr 1fr 1fr;">
+      <div class="card" style="border-left:3px solid var(--accent);">
+        <strong>🗄️ Data organization</strong>
+        Nobody else will organize our data for us. Curation remains our job.
+      </div>
+      <div class="card" style="border-left:3px solid var(--teal);">
+        <strong>🔗 Integrated experiences</strong>
+        Chat + visualization + data is the new interface. Accuracy in our domain is the hard part.
+      </div>
+      <div class="card" style="border-left:3px solid var(--navy);">
+        <strong>📏 Benchmarks</strong>
+        Comprehensive test suites so any tool can be rewritten and validated. May matter more than the tool itself.
+      </div>
+    </div>
+    <div class="question" style="margin-top:12px;">
+      ⚠️ <strong>The 95% illusion:</strong> a vibe-coded prototype looks nearly done — but maintenance, correctness, and collaborative development are the hard part.
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Conversation starters -->
+  <div class="slide slide-final" data-slide="8">
+    <h2>Conversation <strong>starters</strong></h2>
+    <ol class="discussion-list">
+      <li><strong style="color:var(--accent);">What to build?</strong> — data, benchmarks, integrated experiences</li>
+      <li><strong style="color:var(--accent);">Rewrites</strong> — benchmarks may matter more than the tool itself</li>
+      <li><strong style="color:var(--accent);">Agent traffic</strong> — our APIs are now consumed by machines, not just people</li>
+      <li><strong style="color:var(--accent);">Open source</strong> — more PRs, harder to evaluate contributors</li>
+    </ol>
+    <div class="links">
+      <a href="https://www.cbioportal.org" class="link-pill" style="text-decoration:none; color:var(--muted); font-weight:400;">cbioportal.org</a>
+      <a href="https://github.com/cbioportal" class="link-pill" style="text-decoration:none; color:var(--muted); font-weight:400;">github.com/cbioportal</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<nav class="nav">
+  <button id="prev" onclick="navigate(-1)" disabled>&#8592;</button>
+  <span class="nav-counter" id="counter">1 / 9</span>
+  <button id="next" onclick="navigate(1)">&#8594;</button>
+</nav>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    current = Math.max(0, Math.min(total - 1, n));
+    slides[current].classList.remove('exit');
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('prev').disabled = current === 0;
+    document.getElementById('next').disabled = current === total - 1;
+    window.location.hash = current + 1;
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') navigate(1);
+    else if (e.key === 'ArrowLeft') navigate(-1);
+  });
+
+  const hash = parseInt(window.location.hash.replace('#', ''));
+  if (hash >= 1 && hash <= total) {
+    slides[0].classList.remove('active');
+    current = hash - 1;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = hash + ' / ' + total;
+    document.getElementById('prev').disabled = current === 0;
+    document.getElementById('next').disabled = current === total - 1;
+  }
+</script>
+</body>
+</html>
