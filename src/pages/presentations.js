@@ -4,7 +4,8 @@ import { Layout } from '../layout'
 import { rhythm } from '../utils/typography'
 
 const presentations = {
-  upcoming: [
+  upcoming: [],
+  past: [
     {
       date: 'May 26, 2026',
       title: 'AI-Assisted Vibe Coding in Cancer Genomics',
@@ -12,7 +13,6 @@ const presentations = {
       url: '/presentations/2026-05-26-nci-ai-conversations/',
     },
   ],
-  past: [],
 }
 
 export default ({ location }) => {
