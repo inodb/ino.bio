@@ -12,14 +12,13 @@ const presentations = {
       event: 'cBioPortal Community Call',
       url: '/presentations/2026-06-23-cbioportal-community-call-ai/',
     },
-  ],
-  past: [
     {
       date: 'May 26, 2026',
       title: 'AI-Assisted Vibe Coding in Cancer Genomics',
       event: 'Cancer AI Conversations (NCI)',
       url: '/presentations/2026-05-26-nci-ai-conversations/',
     },
+  ],
   ],
 }
 
