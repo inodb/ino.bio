@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Prototypes — cBioPortal Community Call</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --accent: #1a75bc;
+  --accent-light: #eef6fc;
+  --teal: #3c8c5e;
+  --teal-light: #edf7f1;
+  --navy: #2c3e50;
+  --border: #e5e7eb;
+  --card-bg: #f8fafc;
+  --font: 'Inter', -apple-system, sans-serif;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  font-family: var(--font);
+  font-size: 16px;
+  color: var(--text);
+  overflow: hidden;
+  user-select: none;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.deck {
+  position: relative;
+  width: 57vw;
+  height: 57vh;
+  zoom: 1.75;
+  z-index: 1;
+}
+
+/* ── SLIDE BASE ── */
+.slide {
+  position: absolute; inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: translateY(12px);
+  padding: 60px 80px;
+  background: var(--bg);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.slide.exit {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+/* ── TITLE SLIDE ── */
+.slide-title {
+  justify-content: center;
+  padding: 60px 80px;
+}
+
+.slide-title h1 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  line-height: 1.25;
+  color: var(--navy);
+  margin-bottom: 40px;
+}
+
+.slide-title h1 strong {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.slide-title .divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--teal));
+  margin-bottom: 32px;
+}
+
+.slide-title .author {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.slide-title .affiliation {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.slide-title .event {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
+}
+
+.slide-title .logos {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+/* ── CONTENT SLIDES ── */
+.slide-content {
+  justify-content: flex-start;
+}
+
+.slide-content h2 {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--navy);
+  margin-bottom: 24px;
+}
+
+.slide-content h2 strong {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+
+p { font-size: 14px; line-height: 1.7; color: #374151; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.card strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: var(--navy);
+}
+
+.highlight {
+  background: var(--accent-light);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.bullets {
+  font-size: 13px;
+  line-height: 1.8;
+  padding-left: 20px;
+  color: #374151;
+}
+
+.bullets li::marker { color: var(--accent); }
+
+.demo-label {
+  display: inline-block;
+  background: var(--teal-light);
+  color: var(--teal);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+/* ── SECTION SLIDE ── */
+.slide-section {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.slide-section h2 {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  color: var(--navy);
+}
+
+.slide-section h2 strong {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.slide-section p {
+  margin-top: 12px;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+/* ── FINAL SLIDE ── */
+.slide-final {
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.slide-final h2 {
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 300;
+  color: var(--navy);
+  margin-bottom: 32px;
+}
+
+.slide-final h2 strong { font-weight: 700; color: var(--accent); }
+
+.discussion-list {
+  text-align: left;
+  max-width: 600px;
+  font-size: 14px;
+  line-height: 2;
+  padding-left: 20px;
+  color: #374151;
+}
+
+.discussion-list li { margin-bottom: 4px; }
+
+/* ── NAV ── */
+.nav {
+  position: fixed; bottom: 24px; right: 32px;
+  display: flex; align-items: center; gap: 12px;
+  z-index: 99;
+}
+
+.nav button {
+  border: none; background: var(--card-bg); border-radius: 6px;
+  width: 36px; height: 36px; cursor: pointer;
+  font-size: 14px; color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.nav button:disabled { opacity: 0.3; cursor: default; }
+#counter { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* ── PRINT ── */
+@media print {
+  @page { size: landscape; margin: 0; }
+  html, body { overflow: visible; width: 100%; height: auto; }
+  .nav { display: none !important; }
+  .deck { width: 100%; height: auto; zoom: 1; position: static; overflow: visible; }
+  .slide {
+    position: relative !important;
+    inset: auto !important;
+    width: 100vw;
+    min-height: 100vh;
+    opacity: 1 !important;
+    transform: none !important;
+    page-break-after: always;
+    break-after: page;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    display: flex !important;
+    box-sizing: border-box;
+    padding: 60px 80px !important;
+    justify-content: center !important;
+  }
+  .slide.exit { display: flex !important; }
+  .slide:last-child { page-break-after: avoid; break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- SLIDE 0: Title -->
+  <div class="slide slide-title active" data-slide="0">
+    <div class="event">cBioPortal Community Call · June 23, 2026</div>
+    <h1>AI <strong>Prototypes</strong><br>& Future Concepts</h1>
+    <div class="divider"></div>
+    <div class="affiliation">cBioPortal Development Team</div>
+    <div class="logos">
+      <img src="cbioportal-logo.png" alt="cBioPortal" style="height:36px;">
+    </div>
+  </div>
+
+  <!-- SLIDE 1: Overview -->
+  <div class="slide slide-content" data-slide="1">
+    <div class="section-label">Overview</div>
+    <h2>What we'll <strong>demo</strong> today</h2>
+    <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="card" style="border-left:3px solid var(--accent);">
+        <strong>🔌 Integration in Agentic Workflows</strong>
+        MCP servers — Navigator + DB query tools for AI agents.
+      </div>
+      <div class="card" style="border-left:3px solid var(--teal);">
+        <strong>💬 Integration in the Website</strong>
+        Prototype: AI assistant embedded in the main cBioPortal UI.
+      </div>
+    </div>
+    <span class="demo-label">~15 min · live demos</span>
+  </div>
+
+  <!-- SLIDE 2: Architecture 1 -->
+  <div class="slide slide-content" data-slide="2" style="justify-content:center; align-items:center;">
+    <img src="stack-1.svg" alt="cBioChat Stack" style="max-width:90%; max-height:85%; object-fit:contain;" />
+  </div>
+
+  <!-- SLIDE 3: Architecture 2 -->
+  <div class="slide slide-content" data-slide="3" style="justify-content:center; align-items:center;">
+    <img src="stack-2.svg" alt="cBioChat Stack — MCP layer" style="max-width:90%; max-height:85%; object-fit:contain;" />
+  </div>
+
+  <!-- SLIDE 4: MCP in Claude - DB -->
+  <div class="slide slide-content" data-slide="4" style="justify-content:center; align-items:center;">
+    <div style="text-align:center;">
+      <img src="claude-mcp-db.png" alt="cBioPortal Public DB MCP in Claude" style="max-width:95%; max-height:82%; object-fit:contain; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.15);" />
+      <p style="margin-top:12px; font-size:13px; color:var(--muted);"><code>https://mcp.cbioportal.org/db/mcp</code> <span style="background:#fff3cd; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600;">EXPERIMENTAL</span></p>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: MCP in Claude - Navigator -->
+  <div class="slide slide-content" data-slide="5" style="justify-content:center; align-items:center;">
+    <div style="text-align:center;">
+      <img src="claude-mcp-navigator.png" alt="cBioPortal Public Navigator MCP in Claude" style="max-width:95%; max-height:82%; object-fit:contain; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.15);" />
+      <p style="margin-top:12px; font-size:13px; color:var(--muted);"><code>https://mcp.cbioportal.org/navigator/mcp</code> <span style="background:#fff3cd; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:600;">EXPERIMENTAL</span></p>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Agentic Workflows -->
+  <div class="slide slide-section" data-slide="6">
+    <div class="section-label">Demo 1</div>
+    <h2>Integration in <strong>Agentic Workflows</strong></h2>
+    <p>MCP Servers · Navigator · DB Queries</p>
+    <div style="display:flex; gap:12px; margin-top:16px;">
+      <a href="https://claude.ai/share/2d668b1d-7cd7-470d-896e-66e9e8603a93">
+        <img src="mcp-demo-example.png" alt="MCP demo — treatment data query" style="max-width:100%; height:180px; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.15); object-fit:cover; object-position:top;" />
+      </a>
+      <a href="https://claude.ai/share/46f8ec31-4bba-4017-ae46-ab258106bbe4">
+        <img src="mcp-demo-example2.png" alt="MCP demo — imaging data query" style="max-width:100%; height:180px; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.15); object-fit:cover; object-position:top;" />
+      </a>
+    </div>
+    <span class="demo-label">live demo →</span>
+  </div>
+
+  <!-- SLIDE 7: LLMs in the Browser -->
+  <div class="slide slide-content" data-slide="7">
+    <div class="section-label">Context</div>
+    <h2>LLMs in the <strong>browser</strong></h2>
+    <p>Several companies now ship browsers with built-in LLMs:</p>
+    <ul class="bullets" style="margin-top:16px; font-size:15px;">
+      <li><strong>Google</strong> — Gemini</li>
+      <li><strong>OpenAI</strong> — Atlas</li>
+      <li><strong>Perplexity</strong> — Comet</li>
+      <li><strong>Anthropic</strong> — Claude Chrome Extension</li>
+    </ul>
+    <div class="highlight" style="margin-top:20px;">
+      If the browser has an LLM, can it navigate cBioPortal for you?
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Architecture 3 -->
+  <div class="slide slide-content" data-slide="8" style="justify-content:center; align-items:center;">
+    <h2 style="margin-bottom:16px;">Letting the browser's LLM <strong>navigate</strong> cBioPortal</h2>
+    <img src="stack-3.svg" alt="cBioChat Stack — Website integration" style="max-width:85%; max-height:70%; object-fit:contain;" />
+  </div>
+
+  <!-- SLIDE 9: Website Integration -->
+  <div class="slide slide-section" data-slide="9">
+    <div class="section-label">Demo 2 · Zain Nasir</div>
+    <h2>Integration in the <strong>Website</strong></h2>
+    <p>AI assistant embedded in cBioPortal</p>
+    <a href="https://deploy-preview-5614.preview.cbioportal.org/" style="margin-top:16px;">
+      <img src="website-integration.png" alt="cBioPortal Assistant prototype" style="max-width:80%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.15);" />
+    </a>
+    <span class="demo-label">live demo →</span>
+  </div>
+
+  <!-- SLIDE 10: Discussion -->
+  <div class="slide slide-final" data-slide="10">
+    <h2>Discussion & <strong>Feedback</strong></h2>
+    <ol class="discussion-list">
+      <li><strong style="color:var(--accent);">MCP access</strong> — would your team use agent-based access to cBioPortal data?</li>
+      <li><strong style="color:var(--accent);">UI integration</strong> — what would you ask an AI assistant in cBioPortal?</li>
+      <li><strong style="color:var(--accent);">What's next?</strong> — what AI features would be most valuable for your workflow?</li>
+    </ol>
+  </div>
+
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button id="prev" aria-label="Previous">←</button>
+  <span id="counter">1 / 11</span>
+  <button id="next" aria-label="Next">→</button>
+</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const total = slides.length;
+  let current = 0;
+
+  function go(n) {
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    current = Math.max(0, Math.min(total - 1, n));
+    slides.forEach(s => s.classList.remove('exit'));
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('prev').disabled = current === 0;
+    document.getElementById('next').disabled = current === total - 1;
+    history.replaceState(null, '', '#' + (current + 1));
+  }
+
+  document.getElementById('prev').onclick = () => go(current - 1);
+  document.getElementById('next').onclick = () => go(current + 1);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') go(current + 1);
+    if (e.key === 'ArrowLeft') go(current - 1);
+  });
+
+  const hash = parseInt(location.hash.replace('#', ''));
+  if (hash >= 1 && hash <= total) {
+    slides[0].classList.remove('active');
+    current = hash - 1;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = hash + ' / ' + total;
+    document.getElementById('prev').disabled = current === 0;
+    document.getElementById('next').disabled = current === total - 1;
+  }
+</script>
+</body>
+</html>

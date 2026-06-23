@@ -7,6 +7,14 @@ const presentations = {
   upcoming: [],
   past: [
     {
+      date: 'June 23, 2026',
+      title: 'AI Prototypes & Future Concepts',
+      event: 'cBioPortal Community Call',
+      url: '/presentations/2026-06-23-cbioportal-community-call-ai/',
+    },
+  ],
+  past: [
+    {
       date: 'May 26, 2026',
       title: 'AI-Assisted Vibe Coding in Cancer Genomics',
       event: 'Cancer AI Conversations (NCI)',
