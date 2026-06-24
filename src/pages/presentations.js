@@ -8,7 +8,7 @@ const presentations = {
   past: [
     {
       date: 'June 23, 2026',
-      title: 'AI Prototypes & Future Concepts',
+      title: 'cBioPortal AI Prototypes & Future Concepts',
       event: 'cBioPortal Community Call',
       url: '/presentations/2026-06-23-cbioportal-community-call-ai/',
     },
