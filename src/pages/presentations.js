@@ -19,7 +19,6 @@ const presentations = {
       url: '/presentations/2026-05-26-nci-ai-conversations/',
     },
   ],
-  ],
 }
 
 export default ({ location }) => {
