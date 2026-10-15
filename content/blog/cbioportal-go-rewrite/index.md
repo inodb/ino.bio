@@ -4,8 +4,6 @@ date: 2026-10-15 12:00:00
 category: development
 ---
 
-**Contents:** [The rewrite](#the-rewrite) · [Rewrite compared](#rewrite-compared) · [How many prompts?](#how-many-prompts) · [Prompts categorized](#prompts-categorized) · [Prompts: the new source code?](#prompts-the-new-source-code) · [Lessons](#lessons)
-
 A lot of code is being rewritten by AI agents this year. GitHub ported the
 Copilot agent runtime from TypeScript to about 800,000 lines of Rust in a few
 months, mostly with Copilot itself ([write-up](https://github.blog/ai-and-ml/generative-ai/migrating-the-github-copilot-runtime-to-rust-using-copilot/)).
@@ -42,6 +40,8 @@ bigger as a proof of concept: cBioPortal's own backend.
 This post covers what came out of it and how the work went,
 measured from the agents' session logs. Whether to roll it out is up for
 discussion in [RFC 106](https://docs.google.com/document/d/18k_fiIzPCetgWbBzhkq72bpa636tMnxVyZH0BwEDe4E/edit).
+
+**Contents:** [The rewrite](#the-rewrite) · [Rewrite compared](#rewrite-compared) · [How many prompts?](#how-many-prompts) · [Prompts categorized](#prompts-categorized) · [Prompts: the new source code?](#prompts-the-new-source-code) · [Lessons](#lessons)
 
 ## The rewrite
 
