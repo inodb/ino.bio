@@ -727,9 +727,6 @@ numbers from my logs in this post are all counts.
 - **The agents needed the most help with unclear Java code.** The API has
   plenty of old bugs and some non-deterministic behavior, and the intent
   behind the code wasn't always clear.
-- **Get someone who knows the new language to review the code.** I'm no Go
-  expert. I could check that the answers matched, but it was harder for me to
-  judge the Go code itself or push back on it.
 - **Store your prompts somewhere safe!** Those small decisions are exactly what
   others will ask about later, so keep a record of them. Claude Code deletes
   sessions after 30 days by default, so raise `cleanupPeriodDays` in your
