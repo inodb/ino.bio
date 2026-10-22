@@ -709,11 +709,11 @@ numbers from my logs in this post are all counts.
 ## Lessons
 
 - **A mature codebase with lots of tests is easy to rewrite today.**
-  cBioPortal's test suites, end-to-end tests that click through the website
-  in a real browser, and production traffic gave the agents a way to check
-  every change against the original. Our Kubernetes and Traefik setup made it
-  simple to send a copy of real production traffic to the new backend. Years
-  of investing in tests and infrastructure paid off here. In 2025 I
+  We invested a lot in testing cBioPortal over the years, including
+  end-to-end tests that click through the website in a browser. Our
+  Kubernetes and Traefik setup also makes it easy to try things against real
+  production traffic. That gave the agents a way to check every change
+  against the original. In 2025 I
   [wrote](/ai-assisted-coding/) that AI tools struggled with large, mature
   codebases. With the latest models, that maturity is what made this rewrite
   possible.
@@ -724,17 +724,14 @@ numbers from my logs in this post are all counts.
   worth fixing? The agent will decide for you if you let it. It's better to
   tell it, and that's much easier if you know the original code and how the
   program is used.
-- **Unclear original code needs the most guidance.** The agents needed my
-  help most where the Java code was unclear: old bugs, answers that change
-  from one request to the next, and code whose intent was never written down.
-  Tests show what the code does, not what it was meant to do.
-- **It's hard to review code in a language you don't know.** I'm no Go
-  expert. I could check that the answers matched, but it was harder for me to
-  judge the quality of the Go code itself or push back on how it was written.
-  A reviewer who knows the language is worth having.
+- **The agents needed the most help with unclear Java code.** The API has
+  plenty of old bugs and some non-deterministic behavior, and the intent
+  behind the code wasn't always clear.
+- **I'm no Go expert.** I could check that the answers matched, but it was
+  harder for me to judge the Go code itself or push back on it.
 - **Store your prompts somewhere safe!** Those small decisions are exactly what
   others will ask about later, so keep a record of them. Claude Code deletes
   sessions after 30 days by default, so raise `cleanupPeriodDays` in your
   settings before you start.
-- **Rewrites only get easier.** Models keep getting better, so if you want
-  to speed up your rewrite, one option is to wait. 🙂
+- **Rewrites will only get easier.** So if you want to speed one up, you
+  could just wait :).
