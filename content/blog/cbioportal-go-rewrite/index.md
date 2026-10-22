@@ -709,8 +709,11 @@ numbers from my logs in this post are all counts.
 ## Lessons
 
 - **A mature codebase with lots of tests is easy to rewrite today.**
-  cBioPortal's test suites, website tests and production traffic gave the
-  agents a way to check every change against the original. In 2025 I
+  We invested a lot in testing cBioPortal over the years, including
+  end-to-end tests that click through the website in a browser. Our
+  Kubernetes and Traefik setup also makes it easy to try things against real
+  production traffic. That gave the agents a way to check every change
+  against the original. In 2025 I
   [wrote](/ai-assisted-coding/) that AI tools struggled with large, mature
   codebases. With the latest models, that maturity is what made this rewrite
   possible.
@@ -721,7 +724,12 @@ numbers from my logs in this post are all counts.
   worth fixing? The agent will decide for you if you let it. It's better to
   tell it, and that's much easier if you know the original code and how the
   program is used.
+- **The agents needed the most help with unclear Java code.** The API has
+  plenty of old bugs and some non-deterministic behavior, and the intent
+  behind the code wasn't always clear.
 - **Store your prompts somewhere safe!** Those small decisions are exactly what
   others will ask about later, so keep a record of them. Claude Code deletes
   sessions after 30 days by default, so raise `cleanupPeriodDays` in your
   settings before you start.
+- **Rewrites will only get easier.** So if you want to speed one up, you
+  could just wait :).
