@@ -4,7 +4,14 @@ import { Layout } from '../layout'
 import { rhythm } from '../utils/typography'
 
 const presentations = {
-  upcoming: [],
+  upcoming: [
+    {
+      date: 'October 30, 2026',
+      title: 'cBioChat: A Conversational Interface for cBioPortal and HTAN Data',
+      event: 'HTAN-TBEL Data Science Mini-Symposium',
+      url: '/presentations/2026-10-30-htan-tbel-cbiochat/',
+    },
+  ],
   past: [
     {
       date: 'June 23, 2026',

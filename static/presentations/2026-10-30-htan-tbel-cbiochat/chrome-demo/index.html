@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude in Chrome on cBioPortal</title>
+<style>
+/* Illustration of Claude in Chrome's side panel on a cbioportal.org patient view, at a 1600x900 layout.
+   render(t) is a pure function of time; ?capture renders frames deterministically (no CSS animations). */
+:root{
+  --bg:#FAF9F5; --line:#E6E3DA; --text:#1F1E1D; --muted:#73726C; --bubble:#F0EEE6; --accent:#C96442;
+  --tabbar:#DEE1E6; --tool:#F1F3F4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#202124;overflow:hidden;font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+#app{position:relative;width:1600px;height:900px;overflow:hidden;transform-origin:0 0;background:#fff}
+svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+/* Chrome window */
+.tabs{position:absolute;left:0;right:0;top:0;height:40px;background:var(--tabbar);display:flex;align-items:flex-end;padding-left:84px}
+.lights{position:absolute;left:16px;top:14px;display:flex;gap:8px}
+.lights i{width:12px;height:12px;border-radius:50%;background:#ff5f57}.lights i:nth-child(2){background:#febc2e}.lights i:nth-child(3){background:#28c840}
+.tab{height:34px;width:250px;background:#fff;border-radius:10px 10px 0 0;display:flex;align-items:center;gap:8px;padding:0 12px;font-size:13px;color:#3c4043}
+.tab img{width:16px;height:16px;border-radius:3px}
+.tab .x{margin-left:auto;color:#5f6368;font-size:14px}
+.newtab{margin:0 0 8px 10px;color:#5f6368;font-size:20px;line-height:20px}
+.bar{position:absolute;left:0;right:0;top:40px;height:40px;background:#fff;border-bottom:1px solid #dadce0;display:flex;align-items:center;gap:14px;padding:0 12px;color:#5f6368}
+.omni{flex:1;height:30px;border-radius:15px;background:var(--tool);display:flex;align-items:center;gap:10px;padding:0 14px;font-size:14px;color:#202124;white-space:nowrap;overflow:hidden}
+.omni .d{color:#5f6368}
+.ext{display:flex;align-items:center;gap:14px}
+.ext .claude{font-size:13px;font-weight:600;color:var(--accent);border:1.5px solid var(--accent);border-radius:12px;padding:2px 9px;background:#fff}
+.ext .me{width:24px;height:24px;border-radius:50%;background:#4E9A3F;color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center}
+/* page area */
+#pg{position:absolute;left:0;top:81px;width:1180px;height:799px;overflow:hidden;background:#fff}
+#pg img.full{position:absolute;left:0;top:0;transform-origin:0 0}
+#zclip{position:absolute;overflow:hidden;background:#000}
+#zclip img{position:absolute;left:0;top:0;transform-origin:0 0}
+#pnl{position:absolute;overflow:hidden}
+#pnl img{position:absolute;transform-origin:0 0}
+#marks{position:absolute;left:0;top:0;overflow:visible}
+.tag{position:absolute;font-size:13px;font-weight:600;color:#fff;background:var(--accent);border-radius:6px;padding:4px 9px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+/* Claude side panel */
+.side{position:absolute;left:1180px;top:81px;width:420px;height:799px;background:var(--bg);border-left:1px solid var(--line)}
+.side .hd{height:50px;display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid var(--line);font-size:16px;font-weight:600}
+.side .hd .sp{margin-left:auto;display:flex;gap:14px;color:var(--muted)}
+.scroll{position:absolute;left:0;right:0;top:51px;bottom:122px;overflow:hidden}
+.feed{position:absolute;left:0;right:0;top:0;padding:18px 18px 24px}
+.empty{position:absolute;left:0;right:0;top:230px;text-align:center;color:var(--muted);font-size:15px;line-height:1.5}
+.empty b{display:block;color:var(--text);font-size:19px;font-weight:600;margin-bottom:6px;font-family:Georgia,"Times New Roman",serif;font-weight:400}
+.u{display:flex;justify-content:flex-end;margin:4px 0 14px}
+.u div{max-width:320px;background:var(--bubble);border-radius:14px;padding:10px 14px;font-size:15px;line-height:1.45}
+.act{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin:0 0 7px 2px}
+.act .bx{width:20px;height:20px;border-radius:6px;background:#EFEDE6;display:flex;align-items:center;justify-content:center;color:#5d5c57}
+.act .bx svg{width:12px;height:12px}
+.spin{width:12px;height:12px;border-radius:50%;border:2px solid #d6d3ca;border-top-color:var(--accent)}
+.a{font-size:15px;line-height:1.55;margin:8px 0 18px;color:var(--text)}
+.trow{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:6px 11px;font-size:13px;color:#4A4944;background:#fff;margin:0 0 7px}
+.trow .srv{font-weight:500;color:var(--text)}
+.trow code{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.ck{color:#3B7D4F;font-weight:700;font-size:13px}
+.lk{display:block;margin-top:8px;color:var(--accent);text-decoration:underline;text-underline-offset:3px;font-weight:500}
+.comp .chip{position:absolute;left:42px;bottom:10px;display:flex;align-items:center;gap:6px;font-size:12.5px;color:#4A4944;border:1px solid var(--line);border-radius:9px;padding:5px 9px}
+.comp .chip i{width:7px;height:7px;border-radius:50%;background:#3B7D4F}
+.comp{position:absolute;left:14px;right:14px;bottom:30px;height:84px;background:#fff;border:1px solid #DAD7CC;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.comp .txt{position:absolute;left:14px;right:14px;top:12px;font-size:15px;line-height:22px;color:var(--text);white-space:nowrap;overflow:hidden}
+.comp .ph{color:#9a988f}
+.caret{display:inline-block;width:1.5px;height:18px;background:var(--text);vertical-align:-3px;margin-left:1px}
+.comp .send{position:absolute;right:10px;bottom:10px;width:30px;height:30px;border-radius:8px;background:#E8C6B8;color:#fff;display:flex;align-items:center;justify-content:center}
+.comp .send.on{background:var(--accent)}
+.comp .send svg{width:16px;height:16px;stroke-width:2.4}
+.comp .pl{position:absolute;left:12px;bottom:12px;color:var(--muted)}
+.note{position:absolute;left:14px;right:14px;bottom:8px;font-size:11px;color:var(--muted);text-align:center}
+.foot{position:absolute;left:0;top:880px;width:1180px;height:20px;background:#f8f9fa;border-top:1px solid #e3e5e8;font-size:11.5px;line-height:19px;color:#5f6368;text-align:center}
+#cur{position:absolute;width:22px;height:22px;left:0;top:0;pointer-events:none;z-index:30}
+#ripple{position:absolute;width:36px;height:36px;margin:-18px 0 0 -18px;border-radius:50%;border:2px solid var(--accent);pointer-events:none;display:none;z-index:29}
+.hint{position:fixed;left:8px;bottom:6px;font-size:11px;color:#888}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="tabs"><div class="lights"><i></i><i></i><i></i></div><div class="tab"><img src="cbioportal-icon.png" alt=""><span id="tabt"></span><span class="x">×</span></div><div class="newtab">+</div></div>
+  <div class="bar">
+    <svg class="i" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+    <svg class="i" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+    <svg class="i" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg>
+    <div class="omni"><svg class="i" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span id="url"></span></div>
+    <div class="ext"><span class="claude">Claude</span><div class="me">I</div></div>
+  </div>
+  <div id="pg">
+    <img class="full" id="ov" alt="">
+    <div id="zclip"><img id="ov2" alt=""></div>
+    <div id="pnl"><img id="ov3" alt=""></div>
+    <img class="full" id="zm" alt="">
+    <svg id="marks" viewBox="0 0 2400 1640"></svg>
+    <div id="tags"></div>
+  </div>
+  <div class="side">
+    <div class="hd">Claude<div class="sp"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><svg class="i" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></div></div>
+    <div class="scroll"><div class="feed" id="feed"></div></div>
+    <div class="empty" id="empty"><b>How can I help with this page?</b>Claude can read and act on the page you’re viewing.</div>
+    <div class="comp"><div class="txt" id="comp"></div><div class="pl"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><div class="chip"><i></i>cBioPortal</div><div class="send" id="send"><svg class="i" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7M12 19V5"/></svg></div></div>
+    <div class="note">Claude can make mistakes. Check important info.</div>
+  </div>
+  <div class="foot">Illustration of Claude in Chrome on cbioportal.org · page and slide captured from cbioportal.org (HTAN Vanderbilt, HTA11_2951) · numbers from real cBioPortal MCP queries, Oct 2026</div>
+  <div id="ripple"></div>
+  <svg id="cur" viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.3-4.1 2.9 6.6 2.7-1.2-2.9-6.5h6z" fill="#fff" stroke="#000" stroke-width="1.3" stroke-linejoin="round"/></svg>
+</div>
+<div class="hint" id="hint">space play/pause · R restart</div>
+<script src="script.js"></script>
+<script>
+const Q=new URLSearchParams(location.search), CAPTURE=Q.has('capture');
+const C=CHROME, IW=2400, IH=1640, S=799/IH;                 // page images scaled to the page area height
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const clamp01=x=>Math.max(0,Math.min(1,x));
+const ease=x=>x<=0?0:x>=1?1:x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const ICON={read:'<svg class="i" viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 9h8M8 13h8M8 17h5"/></svg>',
+  shot:'<svg class="i" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+  zoom:'<svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg>',
+  check:'<svg class="i" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg>'};
+const iconFor=a=>/Zoom/.test(a)?ICON.zoom:/screenshot/.test(a)?ICON.shot:ICON.read;
+
+// Hand-drawn rectangle with a deterministic wobble, as in demo/index.html.
+function handRect(x,y,w,h,seed){
+  let s=seed*9301+49297; const rnd=()=>((s=(s*9301+49297)%233280)/233280-.5);
+  const pts=[[x,y],[x+w,y],[x+w,y+h],[x,y+h],[x,y]].map(([a,b])=>[a+rnd()*10,b+rnd()*8]);
+  let d=`M${pts[0][0]-14},${pts[0][1]+3}`;
+  for(let i=1;i<pts.length;i++){const [a,b]=pts[i-1],[c,e]=pts[i];d+=` Q${(a+c)/2+rnd()*12},${(b+e)/2+rnd()*12} ${c},${e}`;}
+  return d+` l18,-4`;
+}
+
+// Timeline: for each turn the cursor clicks the composer, types, sends; actions run; the answer streams in.
+const COMP=[1300,830], SEND=[1567,848];
+function build(){
+  const ev=[]; let t=2.2;
+  C.turns.forEach((turn,ti)=>{
+    ev.push({k:'move',t0:t,t1:t+1.0,from:ti?[1400,560]:[640,520],to:COMP}); t+=1.0;
+    ev.push({k:'click',t0:t}); t+=0.25;
+    const td=Math.min(2.6,0.062*turn.user.length);
+    ev.push({k:'type',t0:t,t1:t+td,text:turn.user}); t+=td+0.25;
+    ev.push({k:'move',t0:t,t1:t+0.45,from:COMP,to:SEND}); t+=0.45;
+    ev.push({k:'click',t0:t}); ev.push({k:'user',t0:t+0.05,text:turn.user,ti}); t+=0.5;
+    (turn.tools||[]).forEach(n=>{ ev.push({k:'tool',t0:t,t1:t+0.9,text:n,ti}); t+=1.15; });
+    (turn.actions||[]).forEach(a=>{
+      const zoom=/Zoom/.test(a), d=zoom?2.0:0.8;
+      ev.push({k:'act',t0:t,t1:t+d,text:a,ti}); if(zoom) ev.push({k:'zoom',t0:t+0.15}); t+=d+0.25;
+    });
+    if(ti===1){ ev.push({k:'boxes',t0:t}); t+=0.6; }
+    const words=turn.answer.split(' ').length, ad=words*0.095;
+    ev.push({k:'ans',t0:t,t1:t+ad,text:turn.answer,ti}); t+=ad+(turn.hold ?? 3.4);
+  });
+  return {ev,dur:t};
+}
+const TL=build();
+const zoomEv=TL.ev.find(e=>e.k==='zoom'), boxEv=TL.ev.find(e=>e.k==='boxes');
+
+const $=id=>document.getElementById(id);
+const feed=$('feed'), comp=$('comp'), send=$('send'), cur=$('cur'), rip=$('ripple');
+$('url').innerHTML=`<span>${C.url.split('/')[0]}</span><span class="d">/${C.url.split('/').slice(1).join('/')}</span>`;
+$('tabt').textContent=C.tab;
+['ov','ov3'].forEach(id=>$(id).src=C.overview); $('ov2').src=C.slideCanvas; $('zm').src=C.zoom;
+$('ov').style.transform=$('zm').style.transform=`scale(${S})`;
+const zclip=$('zclip'); Object.assign(zclip.style,{left:'0px',top:C.slideTop*S+'px',width:IW*S+'px',height:C.slideH*S+'px'});
+const [px,py,pw,ph]=C.panel, pnl=$('pnl'); Object.assign(pnl.style,{left:px*S+'px',top:py*S+'px',width:pw*S+'px',height:ph*S+'px'});
+$('ov3').style.transform=`translate(${-px*S}px,${-py*S}px) scale(${S})`;
+const marks=$('marks'); Object.assign(marks.style,{width:IW*S+'px',height:IH*S+'px'});
+
+let lastKey='', scrollY=0;
+function renderPage(t){
+  // Minerva-style zoom: the slide area scales toward the fragment, then the real zoomed capture fades in
+  const u=zoomEv?t-zoomEv.t0:-1, k=ease(clamp01(u/1.5)), fade=clamp01((u-1.15)/0.45);
+  const zooming=u>0&&fade<1;
+  zclip.style.display=pnl.style.display=zooming?'block':'none';
+  if(zooming){
+    const Z=Math.exp(k*Math.log(C.zoomFactor)), F=C.zoomFrom, T=[F[0]+(C.zoomTo[0]-F[0])*k, F[1]+(C.zoomTo[1]-F[1])*k];
+    $('ov2').style.transform=`translate(${S*(T[0]-Z*F[0])}px,${S*(T[1]-Z*F[1])}px) scale(${S*Z})`;
+  }
+  $('zm').style.opacity=u>0?fade:0;
+  // boxes and labels
+  const b0=boxEv?t-boxEv.t0:-1, u3=TL.ev.find(e=>e.k==='user'&&e.ti===2), bo=u3?1-clamp01((t-u3.t0)/0.6):1;
+  marks.style.opacity=$('tags').style.opacity=bo;
+  marks.innerHTML=b0<0?'':C.boxes.map((b,i)=>{const dk=clamp01((b0-i*0.4)/0.55);return `<path d="${handRect(...b.r,i+3)}" fill="none" stroke="#C96442" stroke-width="10" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="${1-dk}"/>`;}).join('');
+  $('tags').innerHTML=b0<0?'':C.boxes.map((b,i)=>{const o=clamp01((b0-i*0.4-0.35)/0.3); if(o<=0) return ''; const [x,y,w,h]=b.r;
+    const pos=b.tag==='below'?`left:${(x+10)*S}px;top:${(y+h+18)*S}px`:b.tag==='leftOf'?`left:${(x-18)*S}px;top:${(y+40)*S}px;transform:translateX(-100%)`:`left:${(x+10)*S}px;top:${(y-62)*S}px`;
+    return `<div class="tag" style="${pos};opacity:${o}">${b.label}</div>`;}).join('');
+}
+function render(t){
+  let typing=null; for(const e of TL.ev) if(e.k==='type'&&t>=e.t0&&t<e.t1+0.7) typing=e;
+  const sentAfter=typing&&TL.ev.find(e=>e.k==='user'&&e.t0>typing.t0);
+  if(typing&&(!sentAfter||t<sentAfter.t0)){const n=Math.floor(typing.text.length*clamp01((t-typing.t0)/(typing.t1-typing.t0)));comp.innerHTML=esc(typing.text.slice(0,n))+(Math.floor(t*2)%2?'':'<span class="caret"></span>');send.classList.toggle('on',n>0);}
+  else {comp.innerHTML='<span class="ph">Ask Claude…</span>';send.classList.remove('on');}
+  let html='', key='', any=false;
+  for(const e of TL.ev){
+    if(t<e.t0) break;
+    if(e.k==='user'){ any=true; html+=`<div class="u" style="opacity:${clamp01((t-e.t0)/0.25)}"><div>${esc(e.text)}</div></div>`; key+='u'+Math.round(clamp01((t-e.t0)/0.25)*8); }
+    if(e.k==='act'){ const done=t>=e.t1, f=clamp01((t-e.t0)/0.25);
+      html+=`<div class="act" style="opacity:${f}"><span class="bx">${done?ICON.check:iconFor(e.text)}</span>${done?'':`<span class="spin" style="transform:rotate(${(t*420)%360}deg)"></span>`}${esc(e.text)}</div>`;
+      key+='a'+(done?1:Math.round(t*20))+Math.round(f*8); }
+    if(e.k==='tool'){ const done=t>=e.t1, f=clamp01((t-e.t0)/0.25);
+      html+=`<div style="opacity:${f}"><div class="trow">${done?'<span class="ck">✓</span>':`<span class="spin" style="transform:rotate(${(t*420)%360}deg)"></span>`}<span class="srv">cBioPortal</span><code>${e.text}</code><svg class="i" viewBox="0 0 24 24" style="width:13px;height:13px"><path d="m6 9 6 6 6-6"/></svg></div></div>`;
+      key+='t'+(done?1:Math.round(t*20))+Math.round(f*8); }
+    if(e.k==='ans'){ const w=e.text.split(' '), n=Math.max(1,Math.ceil(w.length*clamp01((t-e.t0)/(e.t1-e.t0)))), L=C.turns[e.ti].link, lf=L?clamp01((t-e.t1)/0.3):0;
+      html+=`<div class="a">${esc(w.slice(0,n).join(' '))}${lf>0?`<a class="lk" style="opacity:${lf}" href="${L.url}" target="_blank" rel="noopener">${esc(L.text)}</a>`:''}</div>`; key+='n'+n+'l'+Math.round(lf*8); }
+  }
+  $('empty').style.display=any?'none':'block';
+  if(key!==lastKey){feed.innerHTML=html;lastKey=key;}
+  const target=Math.max(0,feed.scrollHeight-feed.parentElement.clientHeight);
+  scrollY=Math.abs(target-scrollY)<1?target:scrollY+(target-scrollY)*0.16;
+  feed.style.transform=`translateY(${-scrollY}px)`;
+  // cursor
+  let cx=640, cy=520, hide=false;
+  for(const e of TL.ev){ if(e.k!=='move'||t<e.t0) continue; const k=ease(clamp01((t-e.t0)/(e.t1-e.t0))); cx=e.from[0]+(e.to[0]-e.from[0])*k; cy=e.from[1]+(e.to[1]-e.from[1])*k; }
+  const lastClick=[...TL.ev].reverse().find(e=>e.k==='click'&&t>=e.t0), r=lastClick?t-lastClick.t0:9;
+  cur.style.transform=`translate(${cx-5}px,${cy-3}px) scale(${r<0.15?0.85:1})`;
+  if(r<0.45){rip.style.display='block';rip.style.left=cx+'px';rip.style.top=cy+'px';rip.style.opacity=1-r/0.45;rip.style.transform=`scale(${0.4+r*2.2})`;} else rip.style.display='none';
+  renderPage(t);
+}
+let clock=0, playing=!CAPTURE&&!Q.has('paused'), prev=performance.now();
+function loop(now){const dt=Math.min(0.1,(now-prev)/1000);prev=now;if(playing){clock+=dt;if(clock>TL.dur){if(Q.has('loop'))clock=0;else{clock=TL.dur;playing=false;}}}render(clock);requestAnimationFrame(loop);}
+addEventListener('keydown',e=>{if(e.key===' '){playing=!playing;e.preventDefault();}if(e.key==='r'||e.key==='R'){clock=0;scrollY=0;lastKey='';playing=true;}});
+window.__scene=()=>{clock=0;scrollY=0;lastKey='';render(0);return TL.dur;};
+window.__step=t=>render(t);
+window.TL=TL;
+function fit(){const s=Math.min(innerWidth/1600,innerHeight/900);$('app').style.transform=CAPTURE?'none':`scale(${s})`;}
+addEventListener('resize',fit); fit(); if(CAPTURE) $('hint').remove();
+render(0); if(!CAPTURE) requestAnimationFrame(loop);
+</script>
+</body>
+</html>

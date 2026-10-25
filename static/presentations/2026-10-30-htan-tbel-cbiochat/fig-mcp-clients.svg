@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="376.804715pt" height="193.428pt" viewBox="0 0 376.804715 193.428" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-25T15:43:12.026847</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 193.428 
+L 376.804715 193.428 
+L 376.804715 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 146.222246 139.930154 
+L 337.002246 139.930154 
+L 337.002246 4.32 
+L 146.222246 4.32 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="me6707a8085" d="M 0 0 
+L 0 3 
+" style="stroke: #555555; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#me6707a8085" x="146.222246" y="139.930154" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: middle; fill: #555555" x="146.222246" y="154.347451" transform="rotate(-0 146.222246 154.347451)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#me6707a8085" x="192.61252" y="139.930154" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: middle; fill: #555555" x="192.61252" y="154.347451" transform="rotate(-0 192.61252 154.347451)">20</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#me6707a8085" x="239.002793" y="139.930154" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: middle; fill: #555555" x="239.002793" y="154.347451" transform="rotate(-0 239.002793 154.347451)">40</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#me6707a8085" x="285.393067" y="139.930154" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: middle; fill: #555555" x="285.393067" y="154.347451" transform="rotate(-0 285.393067 154.347451)">60</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#me6707a8085" x="331.78334" y="139.930154" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: middle; fill: #555555" x="331.78334" y="154.347451" transform="rotate(-0 331.78334 154.347451)">80</text>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 11.6px; font-family: 'Arial'; text-anchor: middle; fill: #555555" x="241.612246" y="169.087774" transform="rotate(-0 241.612246 169.087774)">Distinct IPs per week, median of 4 weeks to Oct 18</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_6">
+      <defs>
+       <path id="ma1ee9759e1" d="M 0 0 
+L -3 0 
+" style="stroke: #555555; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#ma1ee9759e1" x="146.222246" y="126.965806" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: end; fill: #555555" x="139.722246" y="130.924454" transform="rotate(-0 139.722246 130.924454)">GitHub Copilot</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#ma1ee9759e1" x="146.222246" y="105.029514" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: end; fill: #555555" x="139.722246" y="108.988163" transform="rotate(-0 139.722246 108.988163)">Cursor</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#ma1ee9759e1" x="146.222246" y="83.093223" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: end; fill: #555555" x="139.722246" y="87.051871" transform="rotate(-0 139.722246 87.051871)">Claude Code</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#ma1ee9759e1" x="146.222246" y="61.156931" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: end; fill: #555555" x="139.722246" y="65.11558" transform="rotate(-0 139.722246 65.11558)">Claude (claude.ai / desktop)</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#ma1ee9759e1" x="146.222246" y="39.22064" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: end; fill: #555555" x="139.722246" y="43.179288" transform="rotate(-0 139.722246 43.179288)">Custom agents (Python)</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_11">
+      <g>
+       <use xlink:href="#ma1ee9759e1" x="146.222246" y="17.284348" style="fill: #555555; stroke: #555555; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 10.875px; font-family: 'Arial'; text-anchor: end; fill: #555555" x="139.722246" y="21.246077" transform="rotate(-0 139.722246 21.246077)">OpenAI Codex</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 146.222246 133.766056 
+L 150.861273 133.766056 
+L 150.861273 120.165555 
+L 146.222246 120.165555 
+z
+" clip-path="url(#pd93d6b087a)" style="fill: #3d5fa8; stroke: #ffffff; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 146.222246 111.829764 
+L 158.979571 111.829764 
+L 158.979571 98.229264 
+L 146.222246 98.229264 
+z
+" clip-path="url(#pd93d6b087a)" style="fill: #3d5fa8; stroke: #ffffff; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 146.222246 89.893473 
+L 171.736897 89.893473 
+L 171.736897 76.292972 
+L 146.222246 76.292972 
+z
+" clip-path="url(#pd93d6b087a)" style="fill: #3d5fa8; stroke: #ffffff; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 146.222246 67.957182 
+L 219.286927 67.957182 
+L 219.286927 54.356681 
+L 146.222246 54.356681 
+z
+" clip-path="url(#pd93d6b087a)" style="fill: #9fb3dd; stroke: #ffffff; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 146.222246 46.02089 
+L 232.044252 46.02089 
+L 232.044252 32.420389 
+L 146.222246 32.420389 
+z
+" clip-path="url(#pd93d6b087a)" style="fill: #3d5fa8; stroke: #ffffff; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 146.222246 24.084599 
+L 255.239389 24.084599 
+L 255.239389 10.484098 
+L 146.222246 10.484098 
+z
+" clip-path="url(#pd93d6b087a)" style="fill: #3d5fa8; stroke: #ffffff; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 146.222246 139.930154 
+L 146.222246 4.32 
+" style="fill: none; stroke: #555555; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 146.222246 139.930154 
+L 337.002246 139.930154 
+" style="fill: none; stroke: #555555; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9.135px; font-family: 'Arial'; text-anchor: start; fill: #555555" x="150.861273" y="129.329754" transform="rotate(-0 150.861273 129.329754)"> 2  (1.8k requests)</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 9.135px; font-family: 'Arial'; text-anchor: start; fill: #555555" x="158.979571" y="107.393463" transform="rotate(-0 158.979571 107.393463)"> 6  (2.2k requests)</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 9.135px; font-family: 'Arial'; text-anchor: start; fill: #555555" x="171.736897" y="85.457172" transform="rotate(-0 171.736897 85.457172)"> 11  (0.9k requests)</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 9.135px; font-family: 'Arial'; text-anchor: start; fill: #555555" x="219.286927" y="63.52088" transform="rotate(-0 219.286927 63.52088)"> 32†  (17.8k requests)</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9.135px; font-family: 'Arial'; text-anchor: start; fill: #555555" x="232.044252" y="41.584589" transform="rotate(-0 232.044252 41.584589)"> 37  (2.6k requests)</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 9.135px; font-family: 'Arial'; text-anchor: start; fill: #555555" x="255.239389" y="19.648297" transform="rotate(-0 255.239389 19.648297)"> 47  (24.0k requests)</text>
+   </g>
+  </g>
+  <g id="text_19">
+   <text style="font-size: 7.83px; font-family: 'Arial'; text-anchor: end; fill: #888888" x="342.186246" y="187.460183" transform="rotate(-0 342.186246 187.460183)">† claude.ai connects from Anthropic’s servers, so its IPs don’t track users</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pd93d6b087a">
+   <rect x="146.222246" y="4.32" width="190.78" height="135.610154"/>
+  </clipPath>
+ </defs>
+</svg>

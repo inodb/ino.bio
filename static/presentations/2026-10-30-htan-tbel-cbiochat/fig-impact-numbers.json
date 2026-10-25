@@ -1,0 +1,152 @@
+{
+  "as_of_ga4": "2026-10-19",
+  "weekly_users_median_last_12_months": {
+    "value": 12028,
+    "source": "GA4, bot-filtered (repo timeline)"
+  },
+  "citations_core_papers_google_scholar": {
+    "value": 36052,
+    "source": "Google Scholar manual CSV"
+  },
+  "Curated studies": {
+    "value": "548",
+    "source": "cBioPortal database"
+  },
+  "Installations": {
+    "value": "103",
+    "source": "cBioPortal installation map"
+  },
+  "Monthly users": {
+    "value": "40k+",
+    "source": "Google Analytics"
+  },
+  "Monthly chat users": {
+    "value": "350",
+    "source": "Google Analytics"
+  },
+  "API requests / month": {
+    "value": "~36M",
+    "source": "Datadog access logs"
+  },
+  "ai_referral_sessions_by_assistant_total": {
+    "value": {
+      "ChatGPT": 86615,
+      "Claude": 3422,
+      "Copilot": 845,
+      "Gemini": 19630,
+      "Other AI": 6438,
+      "Perplexity": 2879
+    },
+    "source": "GA4 sessionSource",
+    "range": [
+      "2023-09-01",
+      "2026-10-01"
+    ]
+  },
+  "chat_users_by_month": {
+    "value": {
+      "2025-10": 25,
+      "2025-11": 137,
+      "2025-12": 96,
+      "2026-01": 63,
+      "2026-02": 72,
+      "2026-03": 86,
+      "2026-04": 85,
+      "2026-05": 118,
+      "2026-06": 187,
+      "2026-07": 120,
+      "2026-08": 224,
+      "2026-09": 350,
+      "2026-10": 233
+    },
+    "source": "GA4 property 509517768 (chat.cbioportal.org); last month partial"
+  },
+  "mcp_tool_calls_by_week_organic": {
+    "value": {
+      "2026-06-14": 771,
+      "2026-06-21": 2001,
+      "2026-06-28": 1406,
+      "2026-07-05": 543,
+      "2026-07-12": 425,
+      "2026-07-19": 604,
+      "2026-07-26": 268,
+      "2026-08-02": 464,
+      "2026-08-09": 452,
+      "2026-08-16": 1057,
+      "2026-08-23": 3165,
+      "2026-08-30": 2387,
+      "2026-09-06": 2287,
+      "2026-09-13": 2343,
+      "2026-09-20": 1159,
+      "2026-09-27": 2515,
+      "2026-10-04": 4676,
+      "2026-10-11": 762,
+      "2026-10-18": 3000,
+      "2026-10-25": 964
+    },
+    "median_last_4_full_weeks": 2758,
+    "partial_week_ending": [
+      "2026-10-25"
+    ],
+    "source": "Datadog APM, all cBioPortal MCP servers (week ending Sunday); benchmark runs and scheduled poller removed (repo aim1.mcp_weekly)"
+  },
+  "mcp_clients_last_4_weeks_organic": {
+    "requests_total": {
+      "OpenAI Codex": 23953,
+      "Claude (claude.ai / desktop)": 17846,
+      "Custom agents (Python)": 2589,
+      "Cursor": 2228,
+      "GitHub Copilot": 1807,
+      "Claude Code": 857
+    },
+    "distinct_ips_median_per_week": {
+      "GitHub Copilot": 2.0,
+      "Cursor": 5.5,
+      "Claude Code": 11.0,
+      "Claude (claude.ai / desktop)": 31.5,
+      "Custom agents (Python)": 37.0,
+      "OpenAI Codex": 47.0
+    },
+    "distinct_ips_by_week": {
+      "2026-09-27": {
+        "Claude (claude.ai / desktop)": 31,
+        "Claude Code": 10,
+        "Cursor": 3,
+        "Custom agents (Python)": 36,
+        "GitHub Copilot": 2,
+        "OpenAI Codex": 12
+      },
+      "2026-10-04": {
+        "Claude (claude.ai / desktop)": 28,
+        "Claude Code": 12,
+        "Cursor": 6,
+        "Custom agents (Python)": 42,
+        "GitHub Copilot": 2,
+        "OpenAI Codex": 43
+      },
+      "2026-10-11": {
+        "Claude (claude.ai / desktop)": 40,
+        "Claude Code": 13,
+        "Cursor": 7,
+        "Custom agents (Python)": 28,
+        "GitHub Copilot": 1,
+        "OpenAI Codex": 51
+      },
+      "2026-10-18": {
+        "Claude (claude.ai / desktop)": 32,
+        "Claude Code": 9,
+        "Cursor": 5,
+        "Custom agents (Python)": 38,
+        "GitHub Copilot": 7,
+        "OpenAI Codex": 62
+      }
+    },
+    "weeks_ending": [
+      "2026-09-27",
+      "2026-10-04",
+      "2026-10-11",
+      "2026-10-18"
+    ],
+    "source": "Datadog traefik logs, mcp.cbioportal.org, organic (repo mcp_weekly_clients); IPs counted per client version and summed; claude.ai IPs are Anthropic servers"
+  }
+}

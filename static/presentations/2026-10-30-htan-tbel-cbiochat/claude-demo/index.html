@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude + cBioPortal MCP demo</title>
+<style>
+/* Illustration of a Claude-style web chat with the cBioPortal MCP connector, at a 1600x900 layout.
+   render(t) is a pure function of time; ?capture renders frames deterministically (no CSS animations). */
+:root{
+  --bg:#FAF9F5; --side:#F5F4EE; --line:#E6E3DA; --text:#1F1E1D; --muted:#73726C; --soft:#EFEDE6; --bubble:#F0EEE6;
+  --accent:#C96442; --blue:#2E6EB2; --ok:#3B7D4F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);overflow:hidden;font-family:ui-sans-serif,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+#app{position:relative;width:1600px;height:900px;overflow:hidden;transform-origin:0 0;background:var(--bg)}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+/* sidebar */
+.side{position:absolute;left:0;top:0;bottom:0;width:272px;background:var(--side);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:2px}
+.brand{font-size:21px;font-weight:600;letter-spacing:-.2px;padding:4px 10px 18px}
+.side .it{display:flex;align-items:center;gap:10px;font-size:15px;padding:9px 10px;border-radius:9px;color:var(--text)}
+.side .it.new{color:var(--accent);font-weight:500}
+.side .it.new .pl{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1}
+.side .it.on{background:#E9E6DC}
+.side .h{font-size:13px;color:var(--muted);padding:16px 10px 6px}
+.side .c{font-size:14px;padding:8px 10px;border-radius:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#3D3C38}
+.side .c.on{background:#E9E6DC}
+.side .me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;font-size:14px}
+.side .me .av{width:30px;height:30px;border-radius:50%;background:#3D3C38;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px}
+.side .me small{display:block;color:var(--muted);font-size:12px}
+.menu{position:absolute;left:14px;bottom:70px;width:244px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.12);padding:6px;display:none}
+.menu div{padding:9px 12px;border-radius:8px;font-size:14px}
+.menu .on{background:var(--soft)}
+/* main */
+.main{position:absolute;left:272px;right:0;top:0;bottom:0}
+.view{position:absolute;inset:0;display:none}
+.home .greet{position:absolute;left:0;right:0;top:250px;text-align:center;font-size:36px;font-weight:400;letter-spacing:-.4px;color:#2B2A27}
+.comp{position:absolute;left:50%;width:760px;margin-left:-380px;border:1px solid #DDD9CE;background:#fff;border-radius:20px;box-shadow:0 2px 10px rgba(0,0,0,.04);padding:16px 16px 12px}
+.comp .txt{font-size:16px;line-height:24px;min-height:48px;color:var(--text);white-space:normal}
+.comp .ph{color:#9A988F}
+.comp .bar{display:flex;align-items:center;gap:8px;margin-top:8px}
+.comp .btn{width:34px;height:34px;border:1px solid var(--line);border-radius:9px;display:flex;align-items:center;justify-content:center;color:#4A4944}
+.comp .tag{display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4944;border:1px solid var(--line);border-radius:9px;padding:6px 10px}
+.comp .tag i{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.comp .model{margin-left:auto;font-size:14px;color:#4A4944}
+.comp .send{width:34px;height:34px;border-radius:9px;background:#E0B6A4;color:#fff;display:flex;align-items:center;justify-content:center}
+.comp .send.on{background:var(--accent)}
+.tools{position:absolute;width:300px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.12);padding:6px;display:none}
+.tools .r{display:flex;align-items:center;gap:10px;padding:9px 10px;font-size:14px;border-radius:8px}
+.tools .r .sw{margin-left:auto;width:30px;height:18px;border-radius:9px;background:var(--accent);position:relative}
+.tools .r .sw::after{content:"";position:absolute;right:2px;top:2px;width:14px;height:14px;border-radius:50%;background:#fff}
+.tools .h{font-size:12px;color:var(--muted);padding:6px 10px 2px}
+/* chat */
+.chat .ttl{position:absolute;left:24px;top:18px;font-size:15px;color:#3D3C38}
+.scroll{position:absolute;left:0;right:0;top:56px;bottom:170px;overflow:hidden}
+.feed{position:absolute;left:50%;width:760px;margin-left:-380px;top:0;padding:16px 0 30px}
+.u{display:flex;justify-content:flex-end;margin-bottom:26px}
+.u div{max-width:600px;background:var(--bubble);border-radius:16px;padding:12px 16px;font-size:16px;line-height:24px}
+.a{font-size:16px;line-height:26px;color:var(--text)}
+.a p{margin-bottom:12px}
+.a b{font-weight:600}
+.a a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+.trow{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-size:14px;color:#4A4944;background:#fff;margin:0 0 8px}
+.trow .srv{font-weight:500;color:var(--text)}
+.trow code{font-family:ui-monospace,Menlo,monospace;font-size:13px}
+.spin{width:14px;height:14px;border-radius:50%;border:2px solid #E2DFD5;border-top-color:var(--accent)}
+.ck{color:var(--ok);font-weight:700;font-size:13px}
+.a table{border-collapse:collapse;font-size:14.5px;line-height:20px;margin:4px 0 16px;width:100%}
+.a th{text-align:left;font-weight:600;padding:8px 12px 8px 0;border-bottom:1px solid #D8D4C8}
+.a td{padding:8px 12px 8px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.a .n{text-align:right}
+.caret{display:inline-block;width:1.5px;height:19px;background:var(--text);vertical-align:-3px;margin-left:1px}
+/* settings */
+.settings{background:var(--bg)}
+.settings h1{position:absolute;left:60px;top:44px;font-size:28px;font-weight:500;letter-spacing:-.3px}
+.snav{position:absolute;left:52px;top:110px;width:200px;display:flex;flex-direction:column;gap:2px}
+.snav div{padding:9px 12px;border-radius:8px;font-size:15px;color:#3D3C38}
+.snav .on{background:#E9E6DC;font-weight:500}
+.spane{position:absolute;left:300px;top:110px;width:820px}
+.spane h2{font-size:19px;font-weight:600;margin-bottom:6px}
+.spane .d{font-size:14px;color:var(--muted);margin-bottom:22px}
+.conn{display:flex;align-items:center;gap:14px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.conn .ic{width:36px;height:36px;border-radius:9px;background:#EEF3FA;color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+.conn .nm{font-size:15px;font-weight:600}
+.conn .ur{font-size:13px;color:var(--muted);font-family:ui-monospace,Menlo,monospace}
+.conn .st{margin-left:auto;font-size:12px;color:var(--ok);border:1px solid #CFE3D4;background:#F1F8F3;border-radius:999px;padding:3px 10px}
+.empty{font-size:14px;color:var(--muted);border:1px dashed #D8D4C8;border-radius:12px;padding:18px;margin-bottom:10px}
+.addbtn{display:inline-flex;align-items:center;gap:8px;border:1px solid #D8D4C8;background:#fff;border-radius:10px;padding:9px 14px;font-size:14px;font-weight:500}
+.scrim{position:absolute;inset:0;background:rgba(31,30,29,.32);display:none}
+.dlg{position:absolute;left:50%;top:210px;width:540px;margin-left:-270px;background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.25);padding:26px 26px 22px;display:none}
+.dlg h3{font-size:19px;font-weight:600;margin-bottom:4px}
+.dlg .d{font-size:13px;color:var(--muted);margin-bottom:18px}
+.dlg label{display:block;font-size:13px;font-weight:500;margin:12px 0 6px}
+.dlg .in{border:1px solid #D8D4C8;border-radius:10px;padding:10px 12px;font-size:15px;min-height:42px;font-family:ui-sans-serif,-apple-system,sans-serif}
+.dlg .in.f{border-color:var(--accent);box-shadow:0 0 0 3px rgba(201,100,66,.15)}
+.dlg .in .ph{color:#A9A79E}
+.dlg .row{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+.dlg .b{padding:9px 16px;border-radius:10px;font-size:14px;font-weight:500;border:1px solid #D8D4C8}
+.dlg .b.p{background:var(--text);color:#fff;border-color:var(--text)}
+/* overlays */
+#cur{position:absolute;width:24px;height:24px;left:0;top:0;pointer-events:none;z-index:40}
+#ripple{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:2px solid var(--accent);pointer-events:none;display:none;z-index:39}
+.pill{position:absolute;right:28px;top:20px;z-index:35;font-size:15px;font-weight:600;color:#1C3252;background:#FFFDF7;border:2px solid #26283A;border-radius:999px;padding:7px 16px;box-shadow:0 4px 0 rgba(38,40,58,.12)}
+.foot{position:absolute;left:272px;right:0;bottom:12px;text-align:center;font-size:12px;color:var(--muted);z-index:30}
+.hint{position:fixed;left:8px;bottom:6px;font-size:11px;color:#999}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="side">
+    <div class="brand">Claude</div>
+    <div class="it new" id="newchat"><span class="pl">+</span>New chat</div>
+    <div class="it"><svg class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Chats</div>
+    <div class="it"><svg class="i" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Projects</div>
+    <div class="h">Recents</div>
+    <div class="c" id="recent0">KRAS G12C in lung adenocarcinoma</div>
+    <div class="c">Draft methods paragraph</div>
+    <div class="c">Survival analysis in R</div>
+    <div class="me" id="me"><div class="av">I</div><div>Ino de Bruijn<small>Team plan</small></div></div>
+  </div>
+  <div class="menu" id="menu"><div>Ino de Bruijn</div><div id="menuSettings">Settings</div><div>Language</div><div>Get help</div><div>Log out</div></div>
+
+  <div class="main">
+    <!-- home -->
+    <div class="view home" id="vHome">
+      <div class="greet">How can I help you today?</div>
+      <div class="comp" id="compHome" style="top:330px"><div class="txt"><span class="ph">How can I help you today?</span></div>
+        <div class="bar"><div class="btn">+</div><div class="btn" id="toolsBtnH"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></div><div class="model">Claude</div><div class="send"><svg class="i" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7M12 19V5"/></svg></div></div></div>
+    </div>
+    <!-- settings -->
+    <div class="view settings" id="vSet">
+      <h1>Settings</h1>
+      <div class="snav"><div id="navGeneral">General</div><div>Account</div><div>Privacy</div><div>Billing</div><div id="navConn">Connectors</div></div>
+      <div class="spane" id="paneGeneral"><h2>Profile</h2><div class="d">Full name, preferred name and work area.</div></div>
+      <div class="spane" id="paneConn">
+        <h2>Connectors</h2><div class="d">Allow Claude to use tools and data from other services, through the Model Context Protocol (MCP).</div>
+        <div id="connList"></div>
+        <div class="addbtn" id="addBtn"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add custom connector</div>
+      </div>
+      <div class="scrim" id="scrim"></div>
+      <div class="dlg" id="dlg">
+        <h3>Add custom connector</h3><div class="d">Connect Claude to a remote MCP server.</div>
+        <label>Name</label><div class="in" id="inName"></div>
+        <label>Remote MCP server URL</label><div class="in" id="inUrl"></div>
+        <div class="row"><div class="b">Cancel</div><div class="b p" id="addOk">Add</div></div>
+      </div>
+    </div>
+    <!-- chat -->
+    <div class="view chat" id="vChat">
+      <div class="ttl">KRAS G12C in lung adenocarcinoma</div>
+      <div class="scroll"><div class="feed" id="feed"></div></div>
+      <div class="comp" id="compChat" style="bottom:46px"><div class="txt" id="compTxt"></div>
+        <div class="bar"><div class="btn">+</div><div class="btn" id="toolsBtn"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></div><div class="tag" id="tagC"><i></i>cBioPortal ×2</div><div class="model">Claude</div><div class="send" id="send"><svg class="i" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7M12 19V5"/></svg></div></div></div>
+      <div class="tools" id="tools"><div class="h">Connectors</div><div class="r">cBioPortal<span class="sw"></span></div><div class="r">cBioPortal Navigator<span class="sw"></span></div><div class="r" style="color:#9A988F">Web search</div></div>
+    </div>
+  </div>
+  <div class="pill" id="pill"></div>
+  <div class="foot">Illustration of Claude with the cBioPortal MCP connector · numbers from real MCP queries, Oct 2026</div>
+  <div id="ripple"></div>
+  <svg id="cur" viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.3-4.1 2.9 6.6 2.7-1.2-2.9-6.5h6z" fill="#fff" stroke="#000" stroke-width="1.3" stroke-linejoin="round"/></svg>
+</div>
+<div class="hint" id="hint">space play/pause · R restart</div>
+<script src="script.js"></script>
+<script>
+const Q=new URLSearchParams(location.search), CAPTURE=Q.has('capture');
+const $=id=>document.getElementById(id), app=$('app');
+const clamp01=x=>Math.max(0,Math.min(1,x));
+const ease=x=>x<=0?0:x>=1?1:x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const T=TIMELINE, DUR=T.end;
+const typed=(s,t0,t1,t)=>s.slice(0,Math.floor(s.length*clamp01((t-t0)/(t1-t0))));
+const caret=t=>Math.floor(t*2)%2?'':'<span class="caret"></span>';
+function rectOf(id){const e=$(id),a=app.getBoundingClientRect(),r=e.getBoundingClientRect(),z=a.width/1600;return [(r.left-a.left)/z+Math.min(40,r.width/z/2),(r.top-a.top)/z+r.height/z/2];}
+
+let lastFeed='';
+function render(t){
+  // which view
+  const view = t<T.settingsOpen?'home': t<T.newChat?'set':'chat';
+  $('vHome').style.display=view==='home'?'block':'none';
+  $('vSet').style.display=view==='set'?'block':'none';
+  $('vChat').style.display=view==='chat'?'block':'none';
+  $('menu').style.display=(t>=T.menuOpen&&t<T.settingsOpen)?'block':'none';
+  $('menuSettings').className=(t>=T.settingsOpen-0.5&&t<T.settingsOpen)?'on':'';
+  $('recent0').className='c'+(view==='chat'?' on':'');
+  $('recent0').style.visibility=view==='chat'&&t>=T.send?'visible':'hidden';
+  // settings: General, then Connectors
+  const connTab=t>=T.connTab;
+  $('navGeneral').className=connTab?'':'on'; $('navConn').className=connTab?'on':'';
+  $('paneGeneral').style.display=connTab?'none':'block'; $('paneConn').style.display=connTab?'block':'none';
+  const n=(t>=T.c1.add?1:0)+(t>=T.c2.add?1:0);
+  const items=CONNECTORS.slice(0,n).map(c=>`<div class="conn"><div class="ic">cB</div><div><div class="nm">${c.name}</div><div class="ur">${c.url}</div></div><div class="st">Connected</div></div>`).join('');
+  $('connList').innerHTML=n?items:'<div class="empty">No connectors yet.</div>';
+  const dlg=[T.c1,T.c2].find(c=>t>=c.open&&t<c.add);
+  $('dlg').style.display=$('scrim').style.display=dlg?'block':'none';
+  if(dlg){const C=CONNECTORS[dlg===T.c1?0:1];
+    const nm=t<dlg.name0?'':typed(C.name,dlg.name0,dlg.name1,t), ur=t<dlg.url0?'':typed(C.url,dlg.url0,dlg.url1,t);
+    const fN=t>=dlg.name0&&t<dlg.url0, fU=t>=dlg.url0;
+    $('inName').className='in'+(fN?' f':''); $('inUrl').className='in'+(fU?' f':'');
+    $('inName').innerHTML=(nm?esc(nm):'<span class="ph">e.g. cBioPortal</span>')+(fN?caret(t):'');
+    $('inUrl').innerHTML=(ur?esc(ur):'<span class="ph">https://</span>')+(fU&&t<dlg.add-0.6?caret(t):'');
+    $('dlg').style.opacity=clamp01((t-dlg.open)/0.25);}
+  // chat: tools menu, typing, send
+  const tb=$('toolsBtn').getBoundingClientRect(), a=app.getBoundingClientRect(), z=a.width/1600;
+  $('tools').style.display=(t>=T.toolsOpen&&t<T.toolsClose)?'block':'none';
+  $('tools').style.left=((tb.left-a.left)/z-272)+'px'; $('tools').style.top=((tb.top-a.top)/z-150)+'px';
+  if(t>=T.type0&&t<T.send){$('compTxt').innerHTML=esc(typed(QUESTION,T.type0,T.type1,t))+caret(t);$('send').className='send on';}
+  else {$('compTxt').innerHTML='<span class="ph">Reply to Claude…</span>';$('send').className='send';}
+  // feed
+  let html='', key='';
+  if(t>=T.send){ html+=`<div class="u"><div>${esc(QUESTION)}</div></div>`; key+='u';
+    html+='<div class="a">';
+    for(const b of ANSWER){ if(t<b.t) break; const f=clamp01((t-b.t)/0.3), done=b.d?t>=b.t+b.d:true;
+      if(b.type==='tool') html+=`<div style="opacity:${f}"><div class="trow">${done?'<span class="ck">✓</span>':`<span class="spin" style="transform:rotate(${(t*450)%360}deg)"></span>`}<span class="srv">cBioPortal</span><code>${b.name}</code><svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="m6 9 6 6 6-6"/></svg></div></div>`;
+      else html+=`<div style="opacity:${f}">${b.html}</div>`;
+      key+=b.type+Math.round(f*10)+(done?'d':'r'+Math.round(t*20)); }
+    html+='</div>'; }
+  if(key!==lastFeed){$('feed').innerHTML=html;lastFeed=key;}
+  const fd=$('feed'), sc=fd.parentElement, target=Math.max(0,fd.scrollHeight-sc.clientHeight);
+  window.__sy=(window.__sy||0); window.__sy=Math.abs(target-window.__sy)<1?target:window.__sy+(target-window.__sy)*0.15;
+  fd.style.transform=`translateY(${-window.__sy}px)`;
+  // chapter pill
+  const pill=$('pill'), ch=t<T.newChat?'1 · Add the cBioPortal connector':'2 · Ask from your own assistant';
+  pill.textContent=ch; pill.style.opacity=t<0.3?0:1;
+  // cursor
+  if(window.__placing) return;
+  const W=CURSOR; let i=0; while(i<W.length-1&&t>=W[i+1].t) i++;
+  const A=W[i], B=W[Math.min(i+1,W.length-1)], pa=A.p, pb=B.p;
+  const k=B===A?1:ease(clamp01((t-(B.t-0.7))/0.7)), x=pa[0]+(pb[0]-pa[0])*k, y=pa[1]+(pb[1]-pa[1])*k;
+  const hide=t>=T.hideCursor;
+  $('cur').style.display=hide?'none':'block';
+  const clickT=W.filter(w=>w.click).map(w=>w.t).filter(c=>t>=c&&t<c+0.45)[0];
+  $('cur').style.transform=`translate(${x-5}px,${y-3}px) scale(${clickT!==undefined&&t-clickT<0.12?0.85:1})`;
+  if(clickT!==undefined&&!hide){const r=t-clickT;const R=$('ripple');R.style.display='block';R.style.left=x+'px';R.style.top=y+'px';R.style.opacity=1-r/0.45;R.style.transform=`scale(${0.4+r*2})`;} else $('ripple').style.display='none';
+}
+let clock=0, playing=!CAPTURE&&!Q.has('paused'), prev=performance.now();
+function loop(now){const dt=Math.min(.1,(now-prev)/1000);prev=now;if(playing){clock+=dt;if(clock>DUR){clock=DUR;playing=false;}}render(clock);requestAnimationFrame(loop);}
+addEventListener('keydown',e=>{if(e.key===' '){playing=!playing;e.preventDefault();}if(e.key==='r'||e.key==='R'){clock=0;window.__sy=0;lastFeed='';playing=true;}});
+// Cursor targets are measured once, each at the moment of its click, when the element is on screen.
+function place(){window.__placing=true;for(const w of CURSOR){if(w.at){render(w.t-0.02);w.p=rectOf(w.at);}else w.p=w.xy;}window.__placing=false;window.__sy=0;lastFeed='';}
+window.__scene=()=>{place();clock=0;render(0);return DUR;};
+window.__step=t=>render(t);
+function fit(){const s=Math.min(innerWidth/1600,innerHeight/900);app.style.transform=CAPTURE?'none':`scale(${s})`;}
+addEventListener('resize',()=>{fit();place();}); fit(); if(CAPTURE) $('hint').remove();
+document.fonts.ready.then(()=>{place();render(0);if(!CAPTURE)requestAnimationFrame(loop);});
+</script>
+</body>
+</html>

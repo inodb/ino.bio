@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cBioChat — HTAN-TBEL Data Science Mini-Symposium</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; background: #111; overflow: hidden; font-family: Arial, Helvetica, sans-serif; }
+
+/* Fixed 960x540 stage scaled to fit the window */
+#stage { position: absolute; left: 50%; top: 50%; width: 960px; height: 540px; transform-origin: center center; background: #fff; overflow: hidden; }
+.slide { position: absolute; inset: 0; display: none; padding: 34px 48px 0 48px; background: #fff; color: #222; }
+.slide.active { display: block; }
+
+h1.title { font-size: 28px; font-weight: 700; color: #3d5fa8; line-height: 1.15; }
+.sub { font-size: 17px; font-weight: 700; font-style: italic; color: #3d5fa8; margin-top: 4px; }
+.body { margin-top: 30px; font-size: 20px; line-height: 1.35; color: #222; }
+a { color: #3d5fa8; }
+
+ul { list-style: none; }
+ul li { position: relative; padding-left: 28px; margin-bottom: 10px; }
+ul li::before { content: "\25CF"; position: absolute; left: 0; font-size: 14px; top: 3px; }
+ul ul { margin-top: 6px; }
+ul ul li { font-size: 16px; margin-bottom: 4px; }
+ul ul li::before { content: "\25CB"; font-size: 12px; }
+code { font-family: Menlo, monospace; font-size: 0.8em; color: #333; }
+
+.logo { position: absolute; right: 26px; bottom: 14px; height: 26px; }
+.fig { position: absolute; left: 50%; transform: translateX(-50%); box-shadow: 0 1px 6px rgba(0,0,0,.25); }
+.plain { box-shadow: none; }
+.credit { position: absolute; left: 48px; bottom: 14px; font-size: 11px; color: #888; }
+.caption { position: absolute; left: 48px; right: 200px; bottom: 18px; font-size: 13px; font-style: italic; color: #555; }
+.caption ~ .credit { bottom: 3px; }
+video.fig { background: #212121; }
+
+/* Title slide */
+.s-title .t { position: absolute; left: 48px; top: 70px; width: 420px; font-size: 26px; font-weight: 700; color: #3d5fa8; line-height: 1.22; }
+.s-title .hero { display: block; font-size: 58px; line-height: 1.05; margin-bottom: 10px; }
+.s-title .ev { position: absolute; left: 48px; top: 236px; width: 440px; font-size: 16px; color: #555; padding-top: 12px; border-top: 3px solid #3d5fa8; }
+.s-title .shot { position: absolute; right: 48px; top: 64px; width: 400px; box-shadow: 0 1px 6px rgba(0,0,0,.35); }
+.s-title .shotlink { position: absolute; right: 48px; top: 298px; width: 400px; text-align: center; font-size: 17px; font-weight: 700; }
+.s-title .spk { position: absolute; left: 48px; bottom: 40px; width: 440px; line-height: 1.4; }
+.s-title .spk b { display: block; font-size: 19px; color: #222; margin-bottom: 4px; }
+.s-title .spk span { display: block; font-size: 13px; color: #444; }
+.s-title .logos2 { position: absolute; right: 48px; bottom: 44px; display: flex; align-items: center; gap: 18px; }
+.s-title .logos2 img { height: 38px; }
+.s-title .logos2 i { width: 1px; height: 38px; background: #cccccc; }
+
+/* Numbered rows */
+.ov { margin-top: 26px; }
+.ov .row { display: flex; align-items: flex-start; margin-bottom: 22px; }
+.ov .n { flex: 0 0 36px; height: 36px; border-radius: 50%; background: #3d5fa8; color: #fff; font-weight: 700; font-size: 19px; text-align: center; line-height: 36px; margin-right: 16px; margin-top: 2px; }
+.ov .h { font-size: 22px; font-weight: 700; color: #222; }
+.ov .d { font-size: 16px; color: #555; margin-top: 2px; }
+
+/* Impact numbers */
+.nums { position: absolute; left: 48px; right: 48px; display: flex; gap: 12px; }
+.nums div { flex: 1; border-top: 3px solid #3d5fa8; padding-top: 6px; font-size: 13px; color: #555; line-height: 1.25; }
+.nums b { display: block; font-size: 24px; color: #222; }
+
+/* Tables */
+table.cat { border-collapse: collapse; font-size: 15px; width: 100%; }
+table.cat th { text-align: left; color: #3d5fa8; border-bottom: 2px solid #3d5fa8; padding: 4px 8px; font-size: 13px; }
+table.cat td { padding: 5px 8px; border-bottom: 1px solid #ddd; vertical-align: top; }
+table.cat .n { text-align: right; font-variant-numeric: tabular-nums; }
+.ok { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase; border-radius: 9px; padding: 2px 9px; background: #dff2e1; color: #1f7a34; white-space: nowrap; }
+.ok.part { background: #fdecc8; color: #9a6500; }
+
+/* Two-direction cards */
+.dir { position: absolute; top: 112px; width: 300px; }
+.dir .k { font-size: 13px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #3d5fa8; }
+.dir .h { font-size: 22px; font-weight: 700; margin: 4px 0 8px; }
+.dir p { font-size: 16px; line-height: 1.4; color: #333; }
+
+/* Benchmark bars */
+.bars { margin-top: 22px; }
+.bar { display: grid; grid-template-columns: 170px 1fr 140px; align-items: center; gap: 12px; margin-bottom: 11px; font-size: 15px; }
+.bar .track { height: 22px; background: #eef1f7; }
+.bar .fill { height: 100%; background: #3d5fa8; }
+.bar .v { font-size: 14px; } .bar .v b { font-size: 16px; } .bar .v span { color: #888; font-size: 12px; margin-left: 6px; }
+.bar small { display: block; font-size: 11px; color: #888; }
+
+.paths { display: flex; align-items: center; gap: 18px; margin-top: 18px; }
+.paths div { flex: 1; background: #eef1f7; border-radius: 8px; padding: 9px 14px; }
+.paths b { display: block; font-size: 18px; color: #222; } .paths span { font-size: 14px; color: #555; }
+.paths em { font-style: normal; font-weight: 700; color: #3d5fa8; font-size: 18px; }
+.htanbox { position: absolute; left: 48px; right: 220px; bottom: 20px; display: flex; align-items: stretch; gap: 10px; }
+.htanbox .hl { display: flex; flex-direction: column; justify-content: center; padding-right: 8px; }
+.htanbox .hl img { height: 30px; align-self: flex-start; }
+.htanbox .hl b { font-size: 13px; color: #582c7c; margin-top: 5px; } .htanbox .hl i { font-size: 12px; color: #8a6aa8; }
+.htanbox .hc { flex: 1; background: #f3eef8; border-left: 3px solid #582c7c; border-radius: 4px; padding: 7px 10px; }
+.htanbox .hc b { display: block; font-size: 14px; color: #222; }
+.htanbox .hc span { display: block; font-size: 12px; color: #555; line-height: 1.35; }
+.ackh { position: absolute; top: 80px; font-size: 15px; font-weight: 700; color: #222; }
+.dcc2 { position: absolute; left: 612px; top: 106px; width: 310px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 4px; }
+.dcc2 figure { text-align: center; } .dcc2 img { width: 54px; height: 54px; display: block; margin: 0 auto; }
+.dcc2 figcaption { font-size: 11px; font-weight: 700; margin-top: 1px; }
+.ackn { position: absolute; left: 612px; top: 330px; width: 310px; font-size: 12px; line-height: 1.45; color: #333; }
+.acklogos { position: absolute; left: 612px; top: 384px; width: 310px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; align-items: center; }
+.acklogos img { height: 22px; max-width: 140px; object-fit: contain; object-position: left; }
+.two { position: absolute; left: 48px; right: 48px; top: 140px; display: flex; gap: 24px; }
+.two .dc { flex: 1; background: #f4f6fb; border-top: 4px solid #3d5fa8; border-radius: 6px; padding: 22px 24px; min-height: 270px; }
+.two .k { font-size: 24px; font-weight: 700; color: #3d5fa8; }
+.two .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 26px 0 26px; font-size: 15px; }
+.two .flow span { background: #fff; border: 1.5px solid #c9d3ea; border-radius: 6px; padding: 6px 10px; font-weight: 700; color: #333; }
+.two .flow span.hi { background: #3d5fa8; border-color: #3d5fa8; color: #fff; }
+.two .flow i { font-style: normal; color: #3d5fa8; font-weight: 700; }
+.two p { font-size: 18px; line-height: 1.4; color: #222; }
+.two code { display: inline-block; margin-top: 16px; font-size: 14px; color: #3d5fa8; }
+.dcc { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px 6px; }
+.dcc figure { text-align: center; }
+.dcc img { width: 82px; height: 82px; display: block; margin: 0 auto; }
+.dcc figcaption { font-size: 14px; font-weight: 700; margin-top: 3px; }
+.stack { position: absolute; left: 50%; transform: translateX(-50%); top: 100px; width: 560px; display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+.stack .sb { border: 1.5px solid #3d5fa8; border-radius: 8px; padding: 7px 10px; text-align: center; font-size: 15px; background: #fff; }
+.stack .sb b { display: block; font-size: 16px; color: #222; }
+.stack .sb span { display: block; font-size: 12px; color: #555; margin-top: 2px; }
+.stack .user { width: 160px; align-self: center; background: #eef1f7; border-color: #eef1f7; font-weight: 700; }
+.stack .main { background: #3d5fa8; color: #fff; } .stack .main b { color: #fff; font-size: 18px; } .stack .main span { color: #dfe6f5; }
+.stack .data { border-style: dashed; }
+.stack .ar { text-align: center; color: #3d5fa8; font-size: 18px; line-height: 1.1; } .stack .ar i { font-size: 12px; color: #555; }
+.stack .pair { display: flex; gap: 12px; } .stack .pair > * { flex: 1; }
+.stack .ar2 > div { text-align: center; color: #3d5fa8; font-size: 18px; line-height: 1.1; }
+.colh { font-size: 14px; font-weight: 700; color: #222; line-height: 18px; }
+.ex { border-left: 3px solid #3d5fa8; padding: 4px 0 4px 12px; font-size: 15px; line-height: 1.35; color: #222; }
+.ex .k { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #3d5fa8; }
+.ex span { display: block; font-size: 13px; color: #555; margin-top: 3px; }
+.mini { display: grid; grid-template-columns: 150px 1fr 40px; gap: 8px; align-items: center; font-size: 13px; margin-bottom: 6px; }
+.mini div { height: 14px; background: #eef1f7; } .mini i { display: block; height: 100%; background: #3d5fa8; } .mini b { text-align: right; }
+.step { opacity: 0; transition: opacity .35s; } .step.on { opacity: 1; }
+.nav { position: fixed; top: 6px; right: 10px; color: #888; font-size: 12px; z-index: 9; }
+aside.notes { display: none; }
+body.show-notes aside.notes { display: block; position: fixed; left: 0; right: 0; bottom: 0; max-height: 28vh; overflow: auto; background: #111827; color: #e5e7eb; font: 15px/1.5 Arial, sans-serif; padding: 12px 22px; z-index: 50; }
+body.show-notes .slide:not(.active) aside.notes { display: none; }
+
+@media print {
+  @page { size: 960px 540px; margin: 0; }
+  html, body { background: #fff; overflow: visible; height: auto; }
+  #stage { position: static; transform: none !important; width: 960px; height: auto; overflow: visible; }
+  .slide { display: block !important; position: relative; width: 960px; height: 540px; page-break-after: always; break-after: page; overflow: hidden; }
+  .nav, aside.notes { display: none !important; }
+  .step { opacity: 1 !important; }
+}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 Title -->
+  <div class="slide s-title active">
+    <div class="t"><span class="hero">cBioChat</span>A Conversational Interface for cBioPortal and HTAN Data</div>
+    <div class="ev">HTAN-TBEL Data Science Mini-Symposium<br>October 30, 2026</div>
+    <img class="shot" src="cbiochat-answer.jpg" alt="cBioChat answering a question about HTAN polyp data, with a link to cBioPortal">
+    <a class="shotlink" href="https://chat.cbioportal.org" target="_blank" rel="noopener">chat.cbioportal.org</a>
+    <div class="spk"><b>Ino de Bruijn, PhD</b><span>Data Visualization Team Lead, Memorial Sloan Kettering Cancer Center</span><span>HTAN Data Coordinating Center (HTAN DCC)</span></div>
+    <div class="logos2">
+      <img src="logo-htan-text.png" alt="HTAN, Human Tumor Atlas Network">
+      <i></i>
+      <img src="cbioportal-logo.png" alt="cBioPortal">
+    </div>
+    <aside class="notes">Plan: a minute on cBioPortal, then how we are bringing it into the LLM era from two sides — AI in the website, and cBioPortal data inside any AI — and finally how that extends to HTAN data.</aside>
+  </div>
+
+  <!-- 2 cBioPortal in one slide -->
+  <div class="slide">
+    <h1 class="title">cBioPortal for Cancer Genomics</h1>
+    <div class="sub">Make complex cancer genomic data accessible and interpretable</div>
+    <img class="fig plain" src="mgp-views.jpg" alt="cBioPortal views: cohort exploration, group comparison, gene-centric queries, patient visualization" style="top:96px; width:720px;">
+    <div class="caption" style="bottom:32px;">Open source and open data, maintained by MSK, Dana-Farber, UHN, CHOP, The Hyve and SE4BIO</div>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">For those less familiar: cohort exploration, gene-centric queries like OncoPrints and lollipops, group comparison, and patient timelines, across 550+ curated studies. Open source, multi-institution.</aside>
+  </div>
+
+  <!-- 3 15 years -->
+  <div class="slide">
+    <h1 class="title">15+ Years of cBioPortal</h1>
+    <div class="sub">One of the most used tools in cancer genomics</div>
+    <img class="fig plain" src="fig-usage-timeline-clean.png" alt="Weekly cBioPortal users from 2010 to 2026, about 12,000 per week recently, with milestones: Start of TCGA, cBioPortal launch, AACR Project GENIE, HTAN, MSK-CHORD, cBioChat + MCP" style="top:100px; left:36px; transform:none; width:650px;">
+    <div class="nums" style="top:104px; left:716px; right:44px; flex-direction:column; gap:14px;">
+      <div><b>~12k</b>users per week</div>
+      <div><b>36k+</b>citations of the 3 core papers</div>
+      <div><b>550+</b>curated studies</div>
+      <div><b>~36M</b>API requests per month</div>
+      <div><b>100+</b>registered installations</div>
+    </div>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">Weekly users since 2010. The last marker is August 2026, when we launched the AI integrations.</aside>
+  </div>
+
+  <!-- 4 LLM era -->
+  <div class="slide">
+    <h1 class="title">Researchers Already Ask AI Assistants</h1>
+    <div class="sub">Visits to cbioportal.org referred by AI assistants</div>
+    <img class="fig plain" src="fig-ai-referrals.png" alt="Sessions per day referred by AI assistants, Sep 2023 to Oct 2026, mostly ChatGPT and Gemini, peaking above 200 per day" style="top:96px; left:48px; transform:none; width:570px;">
+    <div style="position:absolute; left:640px; top:190px; width:280px; font-size:22px; line-height:1.4; font-weight:700; color:#3d5fa8;">From near zero to 100–200 visits a day.<br><br><span style="color:#222;">How do we bring cBioPortal into this era?</span></div>
+    <div class="credit">Google Analytics 4, sessions by referrer (monthly mean)</div>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+  </div>
+
+  <!-- 5 Two directions -->
+  <div class="slide">
+    <h1 class="title">Two Directions, Launched August 2026</h1>
+    <div class="sub">AI in cBioPortal, and cBioPortal in any AI</div>
+    <div class="dir" style="left:48px;">
+      <div class="k">AI in the website</div>
+      <div class="h">cBioChat</div>
+      <p>Ask in plain language at chat.cbioportal.org; every answer links back to the cBioPortal view that shows it.</p>
+    </div>
+    <div class="dir" style="left:48px; top:290px;">
+      <div class="k">cBioPortal in any AI</div>
+      <div class="h">MCP servers</div>
+      <p>Connect Claude, ChatGPT, Copilot or your own agent, and use cBioPortal data in broader workflows.</p>
+    </div>
+    <img class="fig" src="whats-new.jpg" alt="cBioPortal What's New, August 14, 2026: AI integrations, cBioPortalChat and MCP server" style="top:104px; left:420px; transform:none; width:330px;">
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+  </div>
+
+  <!-- 6 Demo 1 -->
+  <div class="slide">
+    <h1 class="title">cBioChat: Everyday Questions</h1>
+    <div class="sub">Query TCGA and look up treatments in MSK-CHORD, each confirmed in cBioPortal</div>
+    <video class="fig vid" src="cbiochat-core-demo.mp4" poster="cbiochat-core-demo-poster.jpg" controls muted playsinline preload="auto" style="top:94px; width:700px;"></video>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">About 60 seconds. KRAS in 117 TCGA pancreatic samples (64%), mostly G12D/V/R; and 1,890 EGFR-mutant NSCLC patients in MSK-CHORD, most often treated with osimertinib (1,035). Each answer links to the cBioPortal page with the same numbers.</aside>
+  </div>
+
+  <!-- 8 MCP demo -->
+  <div class="slide">
+    <h1 class="title">cBioPortal in Your Own AI</h1>
+    <div class="sub">Add the MCP connector once, then ask from the assistant you already use</div>
+    <video class="fig vid" src="claude-mcp-demo.mp4" poster="claude-mcp-demo-poster.jpg" controls muted playsinline preload="auto" style="top:94px; width:700px;"></video>
+    <div class="credit"><code>mcp.cbioportal.org/db/mcp</code> &middot; <code>mcp.cbioportal.org/navigator/mcp</code> &middot; illustration with real query results</div>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">About 40 seconds. Same servers as cBioChat. The answer compares KRAS G12C in lung adenocarcinoma: 12.4% in TCGA (70 of 566) vs 13.3% in MSK-CHORD (793 of 5,957), as a table you can paste into your notes or a notebook.</aside>
+  </div>
+
+  <!-- 9 Usage -->
+  <div class="slide">
+    <h1 class="title">cBioChat Usage</h1>
+    <div class="sub">About 100 people a week use chat.cbioportal.org (1.2K so far this year)</div>
+    <img class="fig plain" src="fig-chat-weekly.png" alt="Weekly active users of chat.cbioportal.org in 2026, rising from about 20 in January to about 100 per week since the August launch" style="top:100px; left:40px; transform:none; width:500px;">
+    <img class="fig plain" src="fig-mcp-calls.png" alt="MCP tool calls per week since June 2026, about 2,800 per week recently" style="top:110px; left:570px; transform:none; width:360px;">
+    <div class="caption" style="left:570px; right:30px; bottom:150px;">MCP tool calls per week, from Claude, Codex, Copilot, Cursor and custom agents</div>
+    <div class="credit">Left: weekly active users, Google Analytics (chat.cbioportal.org), Jan – Oct 2026. Right: Datadog, our own benchmark runs excluded</div>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">Two ways people use it: the website (left, weekly users this year vs the previous period) and the MCP from their own tools (right, about 2,800 tool calls a week).</aside>
+  </div>
+
+  <!-- 10 Benchmark -->
+  <div class="slide">
+    <h1 class="title">How Do We Know the Answers Are Right?</h1>
+    <div class="sub">146 curated questions, graded on every release</div>
+    <div style="position:absolute; left:48px; top:104px; width:470px; display:flex; flex-direction:column; gap:14px;">
+      <div class="colh">Example questions</div>
+      <div class="ex"><div class="k">Data</div>“How many patients are in MSK-CHORD?”<span>→ 24,950</span></div>
+      <div class="ex"><div class="k">Analysis</div>“Immunotherapy response in melanoma in MSK-CHORD?”<span>→ must say there are no melanoma patients</span></div>
+      <div class="ex"><div class="k">Out of scope</div>“Any flaws in the MSK-CHORD paper’s methods?”<span>→ must decline</span></div>
+    </div>
+    <div style="position:absolute; left:560px; top:104px; width:360px;">
+      <div class="colh" style="margin-bottom:12px;">Pass rate, latest run per model</div>
+      <div class="mini"><span>Claude Sonnet 5.5</span><div><i style="width:74%"></i></div><b>74%</b></div>
+      <div class="mini"><span>Claude Haiku 5.5</span><div><i style="width:65.8%"></i></div><b>66%</b></div>
+      <div class="mini"><span>Claude Haiku 4.5</span><div><i style="width:64.4%"></i></div><b>64%</b></div>
+      <div class="mini"><span>Qwen3.8 27B (open)</span><div><i style="width:56.6%"></i></div><b>57%</b></div>
+      <div class="colh" style="margin:22px 0 6px;">Most common failure</div>
+      <div style="font-size:15px; color:#333;">Asking a clarifying question instead of acting</div>
+    </div>
+    <div class="credit"><a href="https://github.com/cBioPortal/cbioportal-mcp-qa">github.com/cBioPortal/cbioportal-mcp-qa</a></div>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">Four tracks: data (62), analysis (46), navigation (26), out of scope (12). Questions are asked to the deployed agent; the judge sees the tool calls, so computed statistics aren't marked as invented. Haiku 5.5 gets two-thirds right for under a cent. Run-to-run noise is large (Sonnet 5: 62–75% across runs). Each failure becomes a guide change and stays as a regression test.</aside>
+  </div>
+
+  <!-- 12 Beyond bulk -->
+  <div class="slide">
+    <h1 class="title">Beyond Bulk Genomics</h1>
+    <div class="sub">More data types in cBioPortal</div>
+    <img class="fig plain" src="fig-data-types.png" alt="Number of studies by data type: clinical 548, genomic 545, mRNA 229, methylation 94, protein 84; single-cell cell-type composition 6; imaging 35, 17 and 5 studies; 229 studies (42%) with 3 or more modalities" style="top:96px; width:780px;">
+    <div class="htanbox">
+      <div class="hl"><img src="logo-htan-text.png" alt="HTAN, Human Tumor Atlas Network"><b>3 studies in cBioPortal</b><i>more coming</i></div>
+      <div class="hc"><b>Breast cancer</b><span>OHSU · Cell Rep Med 2022</span><span>5 samples</span></div>
+      <div class="hc"><b>Colorectal polyps</b><span>Vanderbilt · Cell 2021</span><span>61 samples</span></div>
+      <div class="hc"><b>Colorectal cancer</b><span>MSK · Nature 2025</span><span>83 samples</span></div>
+    </div>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">Everything the chat and MCP can reach is in this database: mostly bulk genomics and clinical data, but increasingly single-cell summaries and imaging links. 42% of studies have three or more modalities.</aside>
+  </div>
+
+  <!-- 13 Viewers -->
+  <div class="slide">
+    <h1 class="title">Linked to Dedicated Viewers</h1>
+    <div class="sub">Multimodal data in cBioPortal, single-cell data in Cell Explorer, multiplex imaging in Minerva</div>
+    <img class="fig plain" src="mgp-viztools.jpg" alt="cBioPortal for multimodal data, Cell Explorer for single-cell data, Minerva for multiplex imaging data" style="top:96px; width:860px;">
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">Cell Explorer: 8.2M cells across 73 datasets, used by HTAN. Minerva: Harvard Laboratory of Systems Pharmacology.</aside>
+  </div>
+
+  <!-- 14 HTAN intro -->
+  <div class="slide">
+    <h1 class="title">HTAN cBioChat Example: Two Routes to Colorectal Cancer</h1>
+    <img src="chen2021-header.png" alt="Chen et al., Cell 2021: Differential pre-malignant programs and microenvironment chart distinct paths to malignancy in human colorectal polyps" style="display:block; width:760px; margin-top:16px;">
+    <div class="paths"><div><b>Conventional adenomas</b><span>from WNT-driven stem cells</span></div><em>vs</em><div><b>Serrated polyps</b><span>from differentiated cells via metaplasia</span></div></div>
+    <div style="font-size:17px; font-weight:700; color:#3d5fa8; margin-top:18px;">Two observations to reproduce (HTAN Vanderbilt, 61 polyp samples in cBioPortal)</div>
+    <div class="ov" style="margin-top:16px;">
+      <div class="row"><div class="n">1</div><div><div class="h">Different driver mutations</div><div class="d">APC in 85% of tubular adenomas, BRAF V600E in 89% of sessile serrated lesions</div></div></div>
+      <div class="row"><div class="n">2</div><div><div class="h">Different neoplastic cells (scRNA-seq)</div><div class="d">Adenoma-specific cells (ASCs) in adenomas, serrated-specific cells (SSCs) in serrated polyps</div></div></div>
+    </div>
+    <div class="step" style="position:absolute; left:48px; right:48px; top:452px; text-align:center; font-size:24px; font-weight:700; color:#3d5fa8;">Can cBioChat reproduce both from the data in cBioPortal?</div>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">Set up the two claims before the video so the audience knows what to look for: a genomic one (APC vs BRAF) and a single-cell one (ASC vs SSC fractions).</aside>
+  </div>
+
+  <!-- 14b HTAN demo -->
+  <div class="slide">
+    <h1 class="title">Asking About HTAN Data</h1>
+    <div class="sub">Both observations, reproduced by asking and confirmed in cBioPortal</div>
+    <video class="fig vid" src="cbiochat-htan-demo.mp4" poster="cbiochat-htan-demo-poster.jpg" controls muted playsinline preload="auto" style="top:94px; width:700px;"></video>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">Each conversation ends by clicking through to the cBioPortal comparison, shown next to the exact sentence from the paper.</aside>
+  </div>
+
+  <!-- 15 HTAN results -->
+  <div class="slide">
+    <h1 class="title">What Reproduced</h1>
+    <table class="cat" style="margin-top:26px; font-size:15px;">
+      <tr><th style="width:36%">Chen et al., Cell 2021</th><th style="width:46%">cBioChat, and the linked cBioPortal view</th><th></th></tr>
+      <tr><td><i>“APC mutations were detected in 85% of the TAs”</i>; BRAF V600E in 89% of SSLs</td><td>APC 11/13 tubular adenomas; BRAF V600E 8/9 sessile serrated lesions (mutation-profiled samples only)</td><td><span class="ok">Exact match</span></td></tr>
+      <tr><td>ASCs enriched in adenomas, SSCs in serrated polyps (scRNA-seq)</td><td>Median ASC fraction 0.30 vs 0.04, SSC 0.005 vs 0.21; cBioPortal’s test: q = 1.6e-5 and 2.5e-3</td><td><span class="ok">Same direction</span></td></tr>
+    </table>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+  </div>
+
+  <!-- 16 Chrome -->
+  <div class="slide">
+    <h1 class="title">AI on the Page Itself</h1>
+    <div class="sub">Claude in Chrome reading a Minerva H&amp;E slide of a tubular adenoma (HTAN Vanderbilt, HTA11_2951)</div>
+    <video class="fig vid" src="chrome-demo.mp4" poster="chrome-demo-poster.jpg" controls muted playsinline preload="auto" style="top:94px; width:700px;"></video>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+    <aside class="notes">The browser’s assistant can read what you see — here an H&amp;E slide in Minerva — zoom in, and point at adenomatous vs non-dysplastic crypts. A visual description, not a diagnosis; but it shows how image data in cBioPortal becomes something you can ask about.</aside>
+  </div>
+
+  <!-- 16b Features recap -->
+  <div class="slide">
+    <h1 class="title">Features Shown</h1>
+    <div class="sub">Bringing cBioPortal into the LLM era</div>
+    <div class="ov" style="margin-top:30px;">
+      <div class="row"><div class="n">1</div><div><div class="h">AI on the Website: cBioChat</div><div class="d"><a href="https://chat.cbioportal.org">chat.cbioportal.org</a>: a chat-first interface to cBioPortal that queries the data and navigates the website, with good defaults and clear limits (guardrails)</div></div></div>
+      <div class="row"><div class="n">2</div><div><div class="h">cBioPortal Data in Your AI: the cBioPortal MCP</div><div class="d">Connect Claude, ChatGPT, Copilot or your own agent to <code>mcp.cbioportal.org</code></div></div></div>
+      <div class="row"><div class="n">3</div><div><div class="h">Visualize and Interpret with AI: Claude in Chrome</div><div class="d">Understands the viewers on the page and can use the browser, without downloading the data; with the MCP it can also query the data directly</div></div></div>
+    </div>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+  </div>
+
+  <!-- 18 Acknowledgements -->
+  <div class="slide">
+    <h1 class="title">Acknowledgements</h1>
+    <div class="ackh" style="left:48px;">cBioPortal contributors and funders</div>
+    <img src="fig-contributors.png" alt="cBioPortal contributors and funders: photos of 34 contributors, institution, collaboration and funder logos" style="position:absolute; left:40px; top:104px; width:540px;">
+    <div class="ackh" style="left:612px;"><img src="logo-htan-text.png" alt="HTAN" style="height:18px; vertical-align:-3px; margin-right:6px;">DCC team</div>
+    <div class="dcc2">
+      <figure><img src="dcc/darya.png" alt=""><figcaption>Dar’ya</figcaption></figure>
+      <figure><img src="dcc/alex.png" alt=""><figcaption>Alex</figcaption></figure>
+      <figure><img src="dcc/niki.png" alt=""><figcaption>Niki</figcaption></figure>
+      <figure><img src="dcc/robert.png" alt=""><figcaption>Robert</figcaption></figure>
+      <figure><img src="dcc/rochelle.png" alt=""><figcaption>Rochelle</figcaption></figure>
+      <figure><img src="dcc/ashley.png" alt=""><figcaption>Ashley</figcaption></figure>
+      <figure><img src="dcc/ino.png" alt=""><figcaption>Ino</figcaption></figure>
+      <figure><img src="dcc/susheel.png" alt=""><figcaption>Susheel</figcaption></figure>
+      <figure><img src="dcc/vesteinn.png" alt=""><figcaption>Vésteinn</figcaption></figure>
+      <figure><img src="dcc/bill.png" alt=""><figcaption>Bill</figcaption></figure>
+      <figure><img src="dcc/milen.png" alt=""><figcaption>Milen</figcaption></figure>
+      <figure><img src="dcc/onur.png" alt=""><figcaption>Onur</figcaption></figure>
+    </div>
+    <div class="ackn">Aaron Lisman · Bruno Grande · Xiang Li · Subhi Nandakumar · Pierrette Lo · Tiarah Jeudi</div>
+    <div class="acklogos"><img src="logo-msk.png" alt="Memorial Sloan Kettering Cancer Center"><img src="logo-isb.png" alt="Institute for Systems Biology"><img src="logo-dfci.png" alt="Dana-Farber Cancer Institute"><img src="logo-sage.png" alt="Sage Bionetworks"></div>
+    <div class="credit">HTAN data: Vanderbilt center (Chen et al., Cell 2021)</div>
+    <img class="logo" src="cbioportal-logo.png" alt="cBioPortal">
+  </div>
+
+</div>
+<div class="nav"><span id="counter">1 / 17</span></div>
+
+<script>
+  const stage = document.getElementById('stage');
+  const slides = [...document.querySelectorAll('.slide')];
+  let cur = 0;
+  function fit() {
+    const s = Math.min(innerWidth / 960, innerHeight / 540);
+    stage.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  // reveal a slide's hidden .step elements one by one before moving on
+  function next() {
+    const s = slides[cur].querySelector('.step:not(.on)');
+    if (s) s.classList.add('on'); else show(cur + 1);
+  }
+  function show(n) {
+    cur = Math.max(0, Math.min(slides.length - 1, n));
+    slides[cur].querySelectorAll('.step').forEach(el => el.classList.remove('on'));
+    slides.forEach((s, i) => s.classList.toggle('active', i === cur));
+    document.getElementById('counter').textContent = (cur + 1) + ' / ' + slides.length;
+    history.replaceState(null, '', '#' + (cur + 1));
+    // play a slide's video only while it is showing
+    document.querySelectorAll('video.vid').forEach(v => { if (slides[cur].contains(v)) { v.currentTime = 0; v.play().catch(() => {}); } else v.pause(); });
+  }
+  addEventListener('resize', fit);
+  addEventListener('keydown', e => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); next(); }
+    if (['ArrowLeft', 'PageUp'].includes(e.key)) show(cur - 1);
+    if (e.key === 'n' || e.key === 'N') document.body.classList.toggle('show-notes');
+  });
+  addEventListener('click', e => { if (!e.target.closest('a, video')) next(); });
+  fit();
+  const h = parseInt(location.hash.slice(1));
+  show(h >= 1 && h <= slides.length ? h - 1 : 0);
+</script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cBioChat demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* Scripted replay of chat.cbioportal.org (LibreChat v0.8.7, dark) at its 1600x900 desktop layout.
+   Sizes and colors are read from the live app; ?capture renders frames deterministically. */
+:root{
+  --g100:#ececec; --g300:#cdcdcd; --g400:#999696; --g500:#595959; --g600:#424242; --g700:#2f2f2f; --g800:#212121; --g850:#171717;
+  --ink:#26283A; --navy:#1C3252; --blue:#2E6EB2;
+  --mono:Consolas,"Söhne Mono",Monaco,"Andale Mono","Ubuntu Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--g800);overflow:hidden;font-family:Inter,sans-serif;color:var(--g100);-webkit-font-smoothing:antialiased}
+#app{position:relative;width:1600px;height:900px;overflow:hidden;transform-origin:0 0;background:var(--g800)}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.banner{position:absolute;left:0;right:0;top:0;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;background:var(--g800)}
+.rail{position:absolute;left:0;top:32px;bottom:0;width:53px;background:var(--g850);border-right:1px solid var(--g700);display:flex;flex-direction:column;align-items:center;padding-top:10px;gap:4px;color:var(--g100)}
+.rail .b{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.rail .b.on{background:var(--g700)}
+.rail .me{margin-top:auto;margin-bottom:14px;width:28px;height:28px;border-radius:50%;background:#4E9A3F;display:flex;align-items:center;justify-content:center;font-size:13px}
+.share{position:absolute;right:10px;top:42px;width:36px;height:36px;border-radius:8px;border:1px solid var(--g700);display:flex;align-items:center;justify-content:center}
+.share svg{width:18px;height:18px}
+.scroll{position:absolute;left:53px;right:0;top:80px;bottom:150px;overflow:hidden}
+.feed{position:absolute;left:329px;width:843px;top:0;padding:8px 0 30px}
+.msg{display:flex;gap:8px;margin-bottom:44px}
+.av{flex:none;width:28px;height:28px;border-radius:50%;overflow:hidden;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.av.u{background:#4E9A3F;color:#fff}
+.av img{width:28px;height:28px}
+.col{flex:1;min-width:0;padding-left:8px}
+.who{font-weight:600;font-size:16px;line-height:22px;margin-top:4px;margin-bottom:2px}
+.md{font-size:16px;line-height:22.4px;color:var(--g100)}
+.md p{margin-bottom:8px}
+.md b{font-weight:600;color:#fff}
+.md code{font-family:var(--mono);font-size:14px;background:var(--g700);border-radius:6px;padding:2px 6px}
+.md a{color:#fff;font-weight:500;text-decoration:underline;text-underline-offset:3px}
+.md table{border-collapse:collapse;font-size:14px;line-height:20px;margin:6px 0 14px;min-width:560px}
+.md th{text-align:left;font-weight:600;padding:6px 16px 6px 0;border-bottom:1px solid var(--g500)}
+.md td{padding:7px 16px 7px 0;border-bottom:1px solid var(--g600);font-variant-numeric:tabular-nums}
+.md .n{text-align:right}
+.th{display:flex;align-items:center;gap:8px;font-size:16px;margin:8px 0 10px}
+.th svg{width:16px;height:16px}
+.tool{margin:6px 0 10px;font-size:14.4px;line-height:18px;color:var(--g300)}
+.tool .row{display:flex;align-items:center;gap:8px}
+.tool .row svg{width:14px;height:14px}
+.tool .nm{font-weight:500}
+.spin{width:14px;height:14px;border-radius:50%;border:2px solid var(--g600);border-top-color:var(--g100);flex:none}
+.box{margin:8px 0 6px;border:1px solid var(--g700);border-radius:8px;background:var(--g800);padding:12px 12px 10px;max-width:807px}
+.box pre{font-family:var(--mono);font-size:12px;line-height:17px;color:var(--g100);white-space:pre-wrap;word-break:break-word}
+.box .more{font-size:12px;text-decoration:underline;margin-top:8px;color:var(--g100)}
+.box .prm{border-top:1px solid var(--g700);margin-top:10px;padding-top:8px;font-size:12px;display:flex;align-items:center;gap:4px;color:var(--g100)}
+.box .prm svg{width:12px;height:12px}
+.typing{display:inline-flex;gap:5px;padding:6px 0}
+.typing i{width:8px;height:8px;border-radius:50%;background:var(--g300)}
+.comp{position:absolute;left:386px;width:880px;top:755px;height:105px;background:var(--g700);border:1px solid var(--g700);border-radius:24px}
+.comp .txt{position:absolute;left:24px;right:24px;top:22px;font-size:16px;line-height:24px;white-space:nowrap;overflow:hidden}
+.comp .ph{color:rgba(255,255,255,.6)}
+.comp .clip{position:absolute;left:22px;bottom:16px}
+.comp .rt{position:absolute;right:14px;bottom:12px;display:flex;align-items:center;gap:22px}
+.comp .mdl{font-size:14px;font-weight:500;color:var(--g300);display:flex;align-items:center;gap:6px}
+.comp .mdl svg{width:14px;height:14px}
+.send{width:36px;height:36px;border-radius:50%;background:var(--g500);color:var(--g800);display:flex;align-items:center;justify-content:center}
+.send.on{background:var(--g100)}
+.send svg{width:18px;height:18px;stroke-width:2.5}
+.caret{display:inline-block;width:1.5px;height:20px;background:#fff;vertical-align:-4px;margin-left:1px}
+.foot{position:absolute;left:0;right:0;top:874px;text-align:center;font-size:12px;color:var(--g100)}
+.foot u{text-underline-offset:2px}
+/* cursor + click */
+#cur{position:absolute;width:24px;height:24px;left:0;top:0;pointer-events:none;display:none;z-index:30}
+#ripple{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:2px solid #fff;pointer-events:none;display:none;z-index:29}
+/* the real cBioPortal page, opened from the link */
+#page{position:absolute;inset:0;background:#fff;display:none;z-index:20;overflow:hidden}
+#page .chrome{position:absolute;left:0;right:0;top:0;height:46px;background:#dee1e6;display:flex;align-items:center;gap:14px;padding:0 16px;border-bottom:1px solid #c8ccd1}
+#page .dots{display:flex;gap:8px}
+#page .dots i{width:12px;height:12px;border-radius:50%;background:#ff5f57}
+#page .dots i:nth-child(2){background:#febc2e}#page .dots i:nth-child(3){background:#28c840}
+#page .url{flex:1;height:30px;border-radius:15px;background:#fff;display:flex;align-items:center;padding:0 16px;font-size:14px;color:#202124;white-space:nowrap;overflow:hidden}
+#page .view{position:absolute;left:0;right:0;top:46px;height:600px;overflow:hidden;background:#fff;border-bottom:1px solid #d9d6cc}
+#page .strip{position:absolute;left:0;right:0;top:646px;bottom:0;background:#FBFAF6}
+#page .cam{position:absolute;left:0;top:0;width:2400px;height:1500px;transform-origin:0 0}
+#page .cam img{position:absolute;left:0;top:0;width:2400px;height:1500px}
+#page .cam svg{position:absolute;left:0;top:0;width:2400px;height:1500px;overflow:visible}
+.cap{position:absolute;left:50%;top:668px;width:1180px;margin-left:-590px;background:rgba(255,253,247,.97);border:2.5px solid var(--ink);border-radius:16px;box-shadow:0 7px 0 rgba(38,40,58,.15);padding:18px 28px 18px;font-family:'IBM Plex Sans',sans-serif;color:var(--navy);opacity:0}
+.cap .q{font-size:23px;line-height:1.35;font-style:italic}
+.cap .q + .q{margin-top:4px}
+.cap .ct{font-size:16px;color:#3C4250;margin-top:6px}
+.cap .r{margin-top:12px;padding-top:12px;border-top:2px solid var(--blue);font-size:20px;font-weight:600;color:var(--navy)}
+.cap .r span{color:var(--blue)}
+.hint{position:fixed;left:8px;bottom:6px;font-size:11px;color:#666}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="banner">⚠️&nbsp;<b>Beta</b>&nbsp;— Provide feedback with 👍/👎 below each response</div>
+  <div class="rail">
+    <div class="b"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg></div>
+    <div class="b"><svg class="i" viewBox="0 0 24 24"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.4 2.6a1 1 0 0 1 3 3l-9 9a2 2 0 0 1-.85.5l-2.87.84a.5.5 0 0 1-.62-.62l.84-2.87a2 2 0 0 1 .5-.85z"/></svg></div>
+    <div class="b on"><svg class="i" viewBox="0 0 24 24"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></svg></div>
+    <div class="b"><svg class="i" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2M20 14h2M15 13v2M9 13v2"/></svg></div>
+    <div class="b"><svg class="i" viewBox="0 0 24 24"><path d="M15 12h-5M15 8h-5M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg></div>
+    <div class="b"><svg class="i" viewBox="0 0 24 24"><path d="M12 5a3 3 0 1 0-6 .13 4 4 0 0 0-2.52 5.77 4 4 0 0 0 .55 6.59A4 4 0 1 0 12 18z"/><path d="M12 5a3 3 0 1 1 6 .13 4 4 0 0 1 2.52 5.77 4 4 0 0 1-.55 6.59A4 4 0 1 1 12 18z"/><path d="M12 5v13"/></svg></div>
+    <div class="b"><svg class="i" viewBox="0 0 24 24"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></div>
+    <div class="me">I</div>
+  </div>
+  <div class="share"><svg class="i" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></div>
+  <div class="scroll"><div class="feed" id="feed"></div></div>
+  <div class="comp">
+    <div class="txt" id="comp"></div>
+    <div class="clip"><svg class="i" viewBox="0 0 24 24"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></div>
+    <div class="rt">
+      <div class="mdl" id="model">Haiku 4.5 <svg class="i" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+      <svg class="i" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>
+      <div class="send" id="send"><svg class="i" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7M12 19V5"/></svg></div>
+    </div>
+  </div>
+  <div class="foot">Scripted replay of real cBioPortal MCP queries&nbsp;&nbsp;·&nbsp;&nbsp;<u>LibreChat v0.8.7</u> - Every AI for Everyone.</div>
+  <div id="page">
+    <div class="chrome"><div class="dots"><i></i><i></i><i></i></div><div class="url" id="url"></div></div>
+    <div class="view"><div class="cam" id="cam"><img id="pimg" alt=""><svg id="marks" viewBox="0 0 2400 1500"></svg></div></div>
+    <div class="strip"></div><div class="cap" id="cap"></div>
+  </div>
+  <div id="ripple"></div>
+  <svg id="cur" viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.3-4.1 2.9 6.6 2.7-1.2-2.9-6.5h6z" fill="#fff" stroke="#000" stroke-width="1.3" stroke-linejoin="round"/></svg>
+</div>
+<div class="hint" id="hint">space play/pause · ←/→ conversation · R restart · T show/hide tool details</div>
+<script src="script.js"></script>
+<script>
+const Q=new URLSearchParams(location.search), CAPTURE=Q.has('capture');
+const ICON='<img src="cbioportal-icon.png" alt="">';
+const SVG={
+  wrench:'<svg class="i" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+  down:'<svg class="i" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>',
+  up:'<svg class="i" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>',
+  bulb:'<svg class="i" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5M9 18h6M10 22h4"/></svg>'
+};
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let sceneIdx=+(Q.get('scene')||0), showAllTools=false;
+
+// Timeline: the user types, assistant blocks appear, the cursor clicks the link, cBioPortal opens and zooms in.
+const PAGE_DUR=13, CURSOR_DUR=1.6;
+function build(sc){
+  const ev=[]; let t=0.5;
+  for(const turn of sc.turns){
+    const td=Math.min(2.8,0.028*turn.user.length+0.4);
+    ev.push({k:'type',t0:t,t1:t+td,text:turn.user}); t+=td+0.35;
+    ev.push({k:'user',t0:t,text:turn.user}); t+=0.35;
+    ev.push({k:'asst',t0:t}); t+=0.6;
+    for(const b of turn.blocks){
+      const d=b.dur ?? (b.type==='tool'?(b.expand?1.2:0.9):b.type==='thoughts'?0.6:b.type==='text'?Math.max(1.0,0.014*b.html.replace(/<[^>]+>/g,'').length):1.4);
+      ev.push({k:'blk',t0:t,t1:t+d,b}); t+=d+0.25+(b.hold||0);
+    }
+    t+=turn.hold ?? 0.8;
+  }
+  let cur=null,page=null;
+  if(sc.page){ cur={t0:t,t1:t+CURSOR_DUR}; t+=CURSOR_DUR; page={t0:t,t1:t+PAGE_DUR}; t+=PAGE_DUR; }
+  return {ev,dur:t,cur,page};
+}
+function blockHTML(b,p){
+  if(b.type==='thoughts') return `<div class="th fade">${SVG.bulb}Thoughts</div>`;
+  if(b.type==='text') return `<div class="md fade">${b.html}</div>`;
+  if(b.type==='table') return `<div class="md fade"><table><tr>${b.cols.map((c,i)=>`<th${(b.num||[]).includes(i)?' class="n"':''}>${c}</th>`).join('')}</tr>${b.rows.map(r=>`<tr>${r.map((v,i)=>`<td${(b.num||[]).includes(i)?' class="n"':''}>${v}</td>`).join('')}</tr>`).join('')}</table></div>`;
+  if(b.type==='link') return `<div class="md fade"><p><a class="cl" href="${b.url}" target="_blank" rel="noopener">${b.text}</a></p></div>`;
+  if(b.type==='tool'){
+    const done=p>=1, open=done&&(b.expand||showAllTools)&&b.output;
+    return `<div class="tool fade"><div class="row">${done?SVG.wrench:`<span class="spin" style="transform:rotate(${(NOW*450)%360}deg)"></span>`}<span class="nm">${done?'Ran':'Running'} ${b.name}</span><span>in ${b.server||'cbioportal-database'}</span>${open?SVG.up:SVG.down}</div>${open?`<div class="box"><pre>${esc(b.output)}</pre><div class="more">Show more</div><div class="prm">Parameters ${b.params?SVG.up:SVG.down}</div>${b.params?`<pre style="margin-top:8px">${esc(b.params)}</pre>`:''}</div>`:''}</div>`;
+  }
+  return '';
+}
+let TL,lastKey='',scrollY=0,clock=0,NOW=0;
+const app=document.getElementById('app'),feed=document.getElementById('feed'),comp=document.getElementById('comp'),send=document.getElementById('send');
+const page=document.getElementById('page'),cam=document.getElementById('cam'),marks=document.getElementById('marks'),cap=document.getElementById('cap'),cur=document.getElementById('cur'),rip=document.getElementById('ripple');
+const ease=x=>x<=0?0:x>=1?1:x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const clamp01=x=>Math.max(0,Math.min(1,x));
+
+// Hand-drawn rectangle with a deterministic wobble, as in the cBioPortal product-video style.
+function handRect(x,y,w,h,seed){
+  let s=seed*9301+49297; const rnd=()=>((s=(s*9301+49297)%233280)/233280-.5);
+  const pts=[[x,y],[x+w,y],[x+w,y+h],[x,y+h],[x,y]].map(([a,b])=>[a+rnd()*10,b+rnd()*8]);
+  let d=`M${pts[0][0]-14},${pts[0][1]+3}`;
+  for(let i=1;i<pts.length;i++){const [a,b]=pts[i-1],[c,e]=pts[i];d+=` Q${(a+c)/2+rnd()*12},${(b+e)/2+rnd()*12} ${c},${e}`;}
+  return d+` l18,-4`;
+}
+function renderPage(t){
+  const P=SCENES[sceneIdx].page, pg=TL.page;
+  if(!pg||t<pg.t0){page.style.display='none';return;}
+  const u=t-pg.t0;
+  page.style.display='block'; page.style.opacity=clamp01(u/0.35);
+  // camera: from the whole page to the region with the numbers
+  const VW=1600,VH=600, s0=VW/2400, c0=[1200,VH/2/s0];
+  const [rx,ry,rw,rh]=P.cam, s1=Math.min(VW/rw,VH/rh), c1=[rx+rw/2,ry+rh/2];
+  const k=ease(clamp01((u-1.2)/1.8)), s=s0+(s1-s0)*k, cx=c0[0]+(c1[0]-c0[0])*k, cy=c0[1]+(c1[1]-c0[1])*k;
+  cam.style.transform=`translate(${VW/2-cx*s}px,${VH/2-cy*s}px) scale(${s})`;
+  marks.innerHTML=P.boxes.map((b,i)=>{const dk=clamp01((u-3.2-i*0.45)/0.6);return `<path d="${handRect(...b,i+sceneIdx*7+1)}" fill="none" stroke="#2E6EB2" stroke-width="${7.5/s1}" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="${1-dk}"/>`;}).join('');
+  const ck=clamp01((u-0.6)/0.5); cap.style.opacity=ck; cap.style.transform=`translateY(${(1-ck)*10}px)`;
+}
+function render(t){
+  NOW=t; let typing=null;
+  for(const e of TL.ev) if(e.k==='type'&&t>=e.t0&&t<e.t1+0.35) typing=e;
+  if(typing){const n=Math.floor(typing.text.length*clamp01((t-typing.t0)/(typing.t1-typing.t0)));comp.innerHTML=esc(typing.text.slice(0,n))+(Math.floor(t*2)%2?'':'<span class="caret"></span>');send.classList.toggle('on',n>0);}
+  else {comp.innerHTML='<span class="ph">How can I help you explore cBioPortal?</span>';send.classList.remove('on');}
+  let html='',open=false,key=showAllTools?'T':'',active=false;
+  for(const e of TL.ev){
+    if(t<e.t0) break;
+    if(e.k==='user'){ if(open){html+='</div></div>';open=false;} const f=clamp01((t-e.t0)/0.3); html+=`<div class="msg" style="opacity:${f}"><div class="av u">I</div><div class="col"><div class="who">${SCENES.userName}</div><div class="md"><p>${esc(e.text)}</p></div></div></div>`; key+='u'+Math.round(f*10); }
+    if(e.k==='asst'){ const f=clamp01((t-e.t0)/0.3); html+=`<div class="msg" style="opacity:${f}"><div class="av">${ICON}</div><div class="col"><div class="who">cBioChat</div>`; open=true; key+='a'+Math.round(f*10); }
+    if(e.k==='blk'){ const p=clamp01((t-e.t0)/(e.t1-e.t0)); if(p<1) active=true; const f=clamp01((t-e.t0)/0.3); html+=`<div style="opacity:${f}">${blockHTML(e.b,e.b.type==='tool'?p:1)}</div>`; key+='b'+(p>=1?1:0)+Math.round(f*10)+(p<1&&e.b.type==='tool'?'s'+Math.round(t*20):''); }
+  }
+  const next=TL.ev.find(e=>e.t0>t);
+  if(open&&!active&&next&&next.k==='blk'){html+='<div class="typing">'+[0,1,2].map(j=>`<i style="opacity:${(.25+.75*Math.max(0,Math.sin((t*2-j*.15)*Math.PI))).toFixed(2)}"></i>`).join('')+'</div>';key+='d'+Math.round(t*20);}
+  if(open) html+='</div></div>';
+  if(key!==lastKey){feed.innerHTML=html;lastKey=key;}
+  const target=Math.max(0,feed.scrollHeight-feed.parentElement.clientHeight);
+  scrollY=Math.abs(target-scrollY)<1?target:scrollY+(target-scrollY)*0.16;
+  feed.style.transform=`translateY(${-scrollY}px)`;
+  // the cursor moves to the link and clicks it
+  const C=TL.cur, a=feed.querySelector('a.cl');
+  if(C&&a&&t>=C.t0&&t<TL.page.t0+0.3){
+    const ar=a.getBoundingClientRect(), pr=app.getBoundingClientRect(), z=pr.width/1600;
+    const tx=(ar.left-pr.left)/z+Math.min(90,ar.width/z*0.4), ty=(ar.top-pr.top)/z+ar.height/z*0.6;
+    const k=ease(clamp01((t-C.t0)/1.0)), x=1250+(tx-1250)*k, y=700+(ty-700)*k;
+    cur.style.display='block'; cur.style.transform=`translate(${x-5}px,${y-3}px) scale(${t-C.t0>1.15&&t-C.t0<1.3?0.85:1})`;
+    const r=t-C.t0-1.2; if(r>0&&r<0.5){rip.style.display='block';rip.style.left=x+'px';rip.style.top=y+'px';rip.style.opacity=1-r/0.5;rip.style.transform=`scale(${0.4+r*2})`;} else rip.style.display='none';
+  } else {cur.style.display='none';rip.style.display='none';}
+  renderPage(t);
+}
+function setScene(i){
+  sceneIdx=(i+SCENES.length)%SCENES.length; TL=build(SCENES[sceneIdx]); clock=0; lastKey=''; scrollY=0;
+  const P=SCENES[sceneIdx].page;
+  if(P){document.getElementById('pimg').src=P.img; document.getElementById('url').textContent=P.url.replace('https://','');
+    cap.innerHTML=P.quotes.map(q=>`<div class="q">“${q}”</div>`).join('')+`<div class="ct">${P.cite}</div><div class="r"><span>✓ cBioPortal:</span> ${P.result}</div>`;}
+  render(0);
+}
+let playing=!CAPTURE&&!Q.has('paused'), prev=performance.now();
+function loop(now){const dt=Math.min(0.1,(now-prev)/1000);prev=now;if(playing){clock+=dt;if(clock>TL.dur){if(Q.has('loop'))setScene(sceneIdx+1);else{clock=TL.dur;playing=false;}}}render(clock);requestAnimationFrame(loop);}
+addEventListener('keydown',e=>{if(e.key===' '){playing=!playing;e.preventDefault();}if(e.key==='ArrowRight'){setScene(sceneIdx+1);playing=true;}if(e.key==='ArrowLeft'){setScene(sceneIdx-1);playing=true;}if(e.key==='r'||e.key==='R'){setScene(sceneIdx);playing=true;}if(e.key==='t'||e.key==='T'){showAllTools=!showAllTools;}});
+window.__scene=i=>{setScene(i);return TL.dur;};
+window.__step=t=>render(t);
+function fit(){const s=Math.min(innerWidth/1600,innerHeight/900);app.style.transform=CAPTURE?'none':`scale(${s})`;}
+addEventListener('resize',fit); fit(); if(CAPTURE) document.getElementById('hint').remove();
+setScene(sceneIdx); if(!CAPTURE) requestAnimationFrame(loop);
+</script>
+</body>
+</html>
