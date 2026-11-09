@@ -2,6 +2,7 @@
 title: "My Current Coding Setup: Async Software Engineering"
 date: 2026-02-27 12:00:00
 category: development
+ail: 2
 ---
 
 I've been evolving my coding workflow to more async agentic coding: checking in

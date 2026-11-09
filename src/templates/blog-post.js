@@ -30,7 +30,7 @@ export default ({ data, pageContext, location }) => {
   return (
     <Layout location={location} title={title}>
       <Head title={post.frontmatter.title} description={post.excerpt} />
-      <PostTitle title={post.frontmatter.title} date={post.frontmatter.date} />
+      <PostTitle title={post.frontmatter.title} date={post.frontmatter.date} ail={post.frontmatter.ail} />
       <PostContainer html={post.html} />
       {!post.frontmatter.disable_social_share && (
         <SocialShare title={post.frontmatter.title} author={author} />
@@ -78,6 +78,7 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         disable_social_share
+        ail
       }
     }
   }

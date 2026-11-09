@@ -2,6 +2,7 @@
 title: How Researchers Use cBioPortal - An AI-Powered Analysis
 date: 2025-12-24 12:00:00
 category: cbioportal
+ail: 2
 ---
 
 Measuring research software impact is hard. Software often gets mentioned without formal citation, or used programmatically without any mention at all. These challenges have been explored by colleagues ([Istrate et al., 2022](https://arxiv.org/abs/2209.00693); [Afiaz et al., 2024](https://pubmed.ncbi.nlm.nih.gov/39067017/)), work funded by [CZI](https://chanzuckerberg.com/) and [ITCR](https://www.cancer.gov/about-nci/organization/cssi/research/itcr) respectively. The former extracted software mentions from millions of papers; the latter surveyed tool developers on how they measure impact. Inspired by these efforts, we wanted to explore more deeply for one software tool *how* it is used based on published literature. In this experiment we look at [cBioPortal](https://www.cbioportal.org), the tool our team works on—classifying which cancer types, analysis methods, and data sources researchers work with.
