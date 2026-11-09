@@ -3,6 +3,7 @@ title: Thoughts on AI-Assisted Coding
 date: 2025-06-18 12:00:00
 category: development
 disable_social_share: true
+ail: 2
 ---
 
 Been using AI-assisted coding across a bunch of software projects, from quick prototypes to production work. Seeing a few recurring themes:

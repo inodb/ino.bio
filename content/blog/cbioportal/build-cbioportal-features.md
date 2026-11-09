@@ -2,6 +2,7 @@
 title: "Anyone Can Build cBioPortal Features ✨"
 date: 2026-03-25 12:00:00
 category: cbioportal
+ail: 2
 ---
 
 AI has commoditized software development. I think anybody can now build a cBioPortal feature. If you're an analyst familiar with Python and R, it's definitely within reach. But even if you have no coding experience, it's doable with some effort. You tell an AI coding agent what you want and watch it build.

@@ -2,6 +2,7 @@
 title: "Rewriting cBioPortal's Backend in Go with AI Agents: Prototype and Prompt Analysis"
 date: 2026-10-15 12:00:00
 category: development
+ail: 2
 ---
 
 A lot of code is being rewritten by AI agents this year. GitHub ported the
